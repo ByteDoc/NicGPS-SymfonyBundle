@@ -1,0 +1,15 @@
+{% extends 'BytedocGpsBundle::baseUI5.html.twig' %}
+
+{% block head_javascripts %}
+
+	{{ parent() }}
+
+	<!-- Load UI5, select gold reflection theme and the "commons" and "table" control libraries -->
+	<!-- Thems: sap_bluecrystal, sap_goldreflection -->
+	<script id='sap-ui-bootstrap' type='text/javascript'
+		src='/res/UI5/sap-ui-core.js'
+		data-sap-ui-language='en'
+		data-sap-ui-theme='sap_goldreflection'
+		data-sap-ui-libs='sap.ui.commons,sap.ui.table,sap.ui.ux3,sap.ui.core'></script>
+
+{% endblock %}

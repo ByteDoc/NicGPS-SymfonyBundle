@@ -1,0 +1,7 @@
+main:
+    pattern:  /main/{name}
+    defaults: { _controller: BytedocGpsBundle:Main:index, name:nic }
+
+read:
+    pattern:  /read/{dataset}
+    defaults: { _controller: BytedocGpsBundle:Read:index, dataset:test }

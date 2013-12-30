@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+        <title>{% block title %}Welcome!{% endblock %}</title>
+		{% block head_javascripts %}{% endblock %}
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body class="sapUiBody">{# all pages/templates here are supposed to be UI5 #}
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

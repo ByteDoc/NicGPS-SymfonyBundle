@@ -1,0 +1,7 @@
+parameters:
+#    bytedoc_gps.example.class: Bytedoc\GpsBundle\Example
+
+services:
+#    bytedoc_gps.example:
+#        class: %bytedoc_gps.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
