@@ -1,0 +1,17 @@
+<?php
+namespace Bytedoc\GpsBundle\Entity;
+
+class Webressource
+{
+    protected $id;
+
+    protected $guid;
+
+    protected $category;
+
+    protected $title;
+
+    protected $href;
+
+    protected $rating;
+}

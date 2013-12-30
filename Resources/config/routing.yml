@@ -3,5 +3,5 @@ main:
     defaults: { _controller: BytedocGpsBundle:Main:index, name:nic }
 
 read:
-    pattern:  /read/{dataset}
-    defaults: { _controller: BytedocGpsBundle:Read:index, dataset:test }
+    pattern:  /read/{entity}
+    defaults: { _controller: BytedocGpsBundle:Read:read, entity:test }

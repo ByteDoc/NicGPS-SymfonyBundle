@@ -1,0 +1,21 @@
+Bytedoc\GpsBundle\Entity\Webressource:
+    type: entity
+    table: webressource
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        guid:
+            type: guid
+        category:
+            type: string
+            length: 50
+        title:
+            type: string
+            length: 128
+        href:
+            type: string
+            length: 256
+        rating:
+            type: integer
