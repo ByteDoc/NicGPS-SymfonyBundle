@@ -8,7 +8,7 @@
 	//alert("{{ asset('bundles/gps/ext') }}");
 		// register the paths for required modules
 		jQuery.sap.registerModulePath("net.bytedoc.UI5","{{ asset('bundles/gps/ext') }}");
-		jQuery.sap.require("net.bytedoc.UI5.JSONModelPHPFile");
+		jQuery.sap.require("net.bytedoc.UI5.JSONModelSymfony");
 			// JSONModelPHPFile is required directly, because class used directly
 		jQuery.sap.registerModulePath("net.bytedoc.nicgps","{{ asset('bundles/gps/view') }}");
 		jQuery.sap.registerModulePath("net.bytedoc","{{ asset('bundles/gps/ext') }}");
@@ -78,6 +78,7 @@
 		});
 		oApp.buttonSaveNow = oButtonSaveNow;
 		oApp.readDataService = '{{ path("read", {}) }}';
+		oApp.writeDataService = '{{ path("write", {}) }}';
 		
 		// Nic's GPS
 		// Application Structure:
@@ -91,13 +92,13 @@
 		// initiate the structure that holds the Metadata for
 		//   Navigation, Views, Data Entities
 		var shellWorksetItems = {
-			WI_home : {
-				key : "wi_home",
-				text : "Home",
-				view : null,
-				entity : "Dashboard",
-				viewName : "net.bytedoc.nicgps.Dashboard"
-			},
+//			WI_home : {
+//				key : "wi_home",
+//				text : "Home",
+//				view : null,
+//				entity : "Dashboard",
+//				viewName : "net.bytedoc.nicgps.Dashboard"
+//			},
 			WI_portale : {
 				key : "wi_webressourcen",
 				text : "Web-Ressourcen",
@@ -109,10 +110,14 @@
 		// create Models, Views and Workitems
 		jQuery.each(shellWorksetItems, function(key, item) {
 			if(item.entity != null) {
-				oModels[item.entity] = new net.bytedoc.UI5.JSONModelPHPFile();
-				//alert('{{ path("read", {dataset:"test"}) }}');
-				oModels[item.entity].loadService = oApp.readDataService;
-				oModels[item.entity].loadDataFromFile(item.entity);
+				oModels[item.entity] = new net.bytedoc.UI5.JSONModelSymfony();
+				oModels[item.entity].init({
+					entity : item.entity,
+					loadService : oApp.readDataService,
+					saveService : oApp.writeDataService,
+					autoSaveMode : "All"
+				});
+				oModels[item.entity].loadAll();
 				oModels[item.entity].startAutoSave();
 				oModels[item.entity].callbackDataChanged = oApp.eventDataChanged;
 			}
@@ -141,7 +146,7 @@
 			appTitle: "Nic's GPS",
 			showLogoutButton: false,
 			worksetItems: navigationItems,
-			content: shellWorksetItems["WI_home"].view,
+			content: shellWorksetItems["WI_portale"].view,
 			worksetItemSelected: function(oEvent) {
 				var sId = oEvent.getParameter("id");
 				var oShell = oEvent.oSource;

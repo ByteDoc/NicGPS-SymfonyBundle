@@ -14,6 +14,22 @@ class Webressource
     protected $href;
 
     protected $rating;
+	
+	/**
+	 * Copy attributes from another object
+	 * @param Webressource $copy
+	 * @return Webressource
+	 */
+	 public function copyAllAttributes($copy)
+	 {
+		 $this->setGuid($copy->getGuid());
+		 $this->setCategory($copy->getCategory());
+		 $this->setTitle($copy->getTitle());
+		 $this->setHref($copy->getHref());
+		 $this->setRating($copy->getRating());
+		 
+		 return $this;
+	 }
 
     /**
      * Get id

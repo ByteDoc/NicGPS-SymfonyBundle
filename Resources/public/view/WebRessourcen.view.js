@@ -41,13 +41,22 @@ sap.ui.jsview("net.bytedoc.nicgps.WebRessourcen", {
 			toolbar : oToolbar
 		});
 		var watchedControls = [];
+		// ## ID ##
+		var oControl = new sap.ui.commons.TextView({
+			value : "{id}"
+		});
+		oTable.addColumn(new sap.ui.table.Column({
+			label : new sap.ui.commons.Label({ text : "ID" }),
+			template : oControl,
+			visible : false
+		}));
 		// ## Kategorie ##
 		var oControl = new sap.ui.commons.TextField({
 			value : "{category}"
 		});
 		watchedControls.push(oControl);
 		oTable.addColumn(new sap.ui.table.Column({
-			label : new sap.ui.commons.Label({ text : "Kategorie"}),
+			label : new sap.ui.commons.Label({ text : "Kategorie" }),
 			template : oControl,
 			sortProperty : "category",
 			filterProperty : "category",
@@ -59,7 +68,7 @@ sap.ui.jsview("net.bytedoc.nicgps.WebRessourcen", {
 		});
 		watchedControls.push(oControl);
 		oTable.addColumn(new sap.ui.table.Column({
-			label : new sap.ui.commons.Label({ text : "Titel"}),
+			label : new sap.ui.commons.Label({ text : "Titel" }),
 			template : oControl,
 			sortProperty : "title",
 			filterProperty : "title",
@@ -100,7 +109,12 @@ sap.ui.jsview("net.bytedoc.nicgps.WebRessourcen", {
 		}));
 		
 		jQuery.each(watchedControls, function(key, item) {
-			item.attachChange(oController.dataChanged);
+			//item.attachChange(oController.dataChanged);
+			item.attachChange( function(oEvent) {
+				myDebug = this;
+				var oModel = this.getModel();
+				oModel.dataChanged(this);
+			});
 		});
 		
 		oTable.bindRows("/");

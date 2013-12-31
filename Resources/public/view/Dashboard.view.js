@@ -34,9 +34,14 @@ sap.ui.jsview("net.bytedoc.nicgps.Dashboard", {
 			type : sap.ui.core.mvc.ViewType.JS,
 			viewName : "net.bytedoc.nicgps.DeadlinesPanel"
 		});
-		var oModelDeadlinesPanel = new net.bytedoc.UI5.JSONModelPHPFile();
-		oModelDeadlinesPanel.loadService = oApp.readDataService;
-		oModelDeadlinesPanel.loadDataFromFile("Deadlines");
+		var oModelDeadlinesPanel = new net.bytedoc.UI5.JSONModelSymfony();
+		oModelDeadlinesPanel.init( {
+			entity : "Deadlines",
+			loadService : oApp.readDataService,
+			saveService : oApp.writeDataService,
+			autoSaveMode : "AutoSaveAll"
+		});
+		oModelDeadlinesPanel.loadAll();
 		oModelDeadlinesPanel.startAutoSave();
 		oModelDeadlinesPanel.callbackDataChanged = oApp.eventDataChanged;
 		oViewDeadlinesPanel.setModel(oModelDeadlinesPanel);

@@ -5,3 +5,7 @@ main:
 read:
     pattern:  /read/{entity}
     defaults: { _controller: BytedocGpsBundle:Read:read, entity:test }
+
+write:
+    pattern:  /write/{entity}
+    defaults: { _controller: BytedocGpsBundle:Write:write, entity:test }

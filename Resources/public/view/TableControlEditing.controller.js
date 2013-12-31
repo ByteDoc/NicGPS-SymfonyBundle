@@ -33,13 +33,14 @@ sap.ui.core.mvc.Controller.extend("net.bytedoc.nicgps.TableControlEditing", {
 	},
 	
 	dataChanged: function(oEvent) {
+		myDebug = oEvent;
 		var oModel = this.getModel();
 		oModel.dataChanged();
 	},
 	
 	save: function(oEvent) {
 		var oModel = this.getModel();
-		oModel.saveMe();
+		oModel.saveAll();
 	}
 	
 });
