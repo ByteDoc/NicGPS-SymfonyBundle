@@ -7,14 +7,8 @@ sap.ui.model.json.JSONModel.extend("net.bytedoc.UI5.JSONModelSymfony", {
 	loadService : "",
 	saveService : "",
 	entity : "",
-	// Save Optionen:
-	//   - einzelnes Attribut (TODO)
-	//   - einen einzelnen Datensatz (TODO)
-	//   - alle Datensätze des Models
-	autoSaveMode : "",
-	AutoSaveAll : "All",
-	AutoSaveSingle : "Single",
-	AutoSaveAttribute : "Attribute",
+	
+	changedPaths : [],
 	
 	
 	// initialize with the necessary information
@@ -22,16 +16,28 @@ sap.ui.model.json.JSONModel.extend("net.bytedoc.UI5.JSONModelSymfony", {
 		this.entity = oParams.entity;
 		this.loadService = oParams.loadService;
 		this.saveService = oParams.saveService;
-		this.autoSaveMode = oParams.autoSaveMode;
 	},
 	
 	// save all data from the model
-	saveAll : function() { 
+	saveAll : function() {
+		// only save the changed paths
+		var arrayToSave = [];
+		var oData = this.oData;
+		jQuery.each(this.changedPaths, function(index, value) {
+			var index = value.replace(/^\//g,'');
+			arrayToSave.push(oData[index]);
+		});
+		// create JSON string for the changed paths
+		var jsonString = JSON.stringify(arrayToSave);
+		//var jsonString = this.getJSON(); // ALL of oData
 		jQuery.ajax({
 			url: this.getSaveUrl(),
 			type: "POST",
 			data: { mode: "entity",
-					json: this.getJSON() }
+					json: jsonString },
+			error: function(jqXHR, textStatus, errorThrown) {
+				oApp.ajaxError("Saving failed", jqXHR, textStatus, errorThrown);
+			}
 		});
 	},
 	
@@ -51,32 +57,34 @@ sap.ui.model.json.JSONModel.extend("net.bytedoc.UI5.JSONModelSymfony", {
 	},
 
 	// react on a change in the model data
-	dataChanged : function(oEvent) {
-		if(oEvent) {
-			var sPath = oEvent.getBindingContext().sPath;
-			var sId = oEvent.getBindingContext().getProperty("id");
+	dataChanged : function(sPath) {
+		if(sPath) {
+			if(jQuery.inArray(sPath, this.changedPaths) == -1) {
+				this.changedPaths.push(sPath);
+			}
 		}
-		switch (this.autoSaveMode) {
-		case this.AutoSaveAll:
-			this.unsaved = true;
-			// also restart the timer, we do not need to save every x seconds, if user keeps changing
-			this.restartAutoSave();
-			// tell the app controller that data has changed
-			if(jQuery.type(this.callbackDataChanged) == "function") {
-				this.callbackDataChanged();
-			}	
-			break;
-			
-		case this.AutoSaveSingle:
-			
-			break;
-			
-		case this.AutoSaveAttribute:
-			
-			break;
-		default:
-			
+		this.unsaved = true;
+		// also restart the timer, we do not need to save every x seconds, if user keeps changing
+		this.restartAutoSave();
+		// tell the app controller that data has changed
+		if(jQuery.type(this.callbackDataChanged) == "function") {
+			this.callbackDataChanged();
 		}
+	},
+	
+	// eine Zeile löschen
+	deleteRowByIndex : function(indexToDelete) {
+		var jsonString = JSON.stringify(this.oData[indexToDelete]);
+		this.oData.splice(indexToDelete, 1);
+		jQuery.ajax({
+			url: this.getSaveUrl(),
+			type: "POST",
+			data: { mode: "delete",
+					json: jsonString },
+			error: function(jqXHR, textStatus, errorThrown) {
+				oApp.ajaxError("Deleting failed", jqXHR, textStatus, errorThrown);
+			}
+		});
 		
 	},
 	

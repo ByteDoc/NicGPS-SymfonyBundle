@@ -22,20 +22,19 @@ sap.ui.core.mvc.Controller.extend("net.bytedoc.nicgps.TableControlEditing", {
 			var oTable = oButton.getParent().getParent();
 			break;
 		}
-		myDebug = oButton;
 		var selectedIndices = oTable.getSelectedIndices();
+		// deleting of multiple rows does not work yet!
+		// indices get changed during deletion, wrong entries get deleted
 		jQuery.each(selectedIndices, function(index, value) {
 			var indexToDelete = oTable.getContextByIndex(value).sPath.replace(/^\//g,'');
-			oModel.oData.splice(indexToDelete, 1);
+			oModel.deleteRowByIndex(indexToDelete);
 		});
 		oModel.refresh();
-		oModel.dataChanged();
 	},
 	
-	dataChanged: function(oEvent) {
-		myDebug = oEvent;
-		var oModel = this.getModel();
-		oModel.dataChanged();
+	dataChanged: function(oSource) {
+		var oModel = oSource.getModel();
+		oModel.dataChanged(oSource.getBindingContext().getPath());
 	},
 	
 	save: function(oEvent) {

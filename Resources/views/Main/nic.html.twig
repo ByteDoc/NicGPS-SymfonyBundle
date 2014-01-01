@@ -65,6 +65,9 @@
 			eventDataChanged : function() {
 				var app = oApp;
 				app.buttonSaveNowActivate();
+			},
+			ajaxError : function(actionMessage, jqXHR, textStatus, errorThrown) {
+				alert(actionMessage);
 			}
 		};
 		
@@ -114,8 +117,7 @@
 				oModels[item.entity].init({
 					entity : item.entity,
 					loadService : oApp.readDataService,
-					saveService : oApp.writeDataService,
-					autoSaveMode : "All"
+					saveService : oApp.writeDataService
 				});
 				oModels[item.entity].loadAll();
 				oModels[item.entity].startAutoSave();
@@ -164,12 +166,9 @@
 		// Initialise the App "Controller"
 		oApp.init();
 		
-		// at this point the namespace object for the App configuration should be ready to be extended
-		//net.bytedoc.nicgps.Config = {};
-		//net.bytedoc.nicgps.Config.autoSave = true;
 		
 		
-		var myDebug = {};
+		var mydebug = {};
 		
 		
 	</script>

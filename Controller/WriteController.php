@@ -51,9 +51,19 @@ class WriteController extends Controller
 				// TODO create OK code response
 				break;
 				
-			case 'attribute':
-				# code...
-				// TODO code single attribute update
+			case 'delete':
+				$arrayItem = json_decode($request->request->get("json"));
+				$em = $this->getDoctrine()->getManager();
+				$repository = $em->getRepository("BytedocGpsBundle:".$entity);
+				if(property_exists($arrayItem,"id")) {
+					$db_object = $repository->find($arrayItem->id);
+				}
+				if(isset($db_object)) {
+					$em->remove($db_object);
+				}
+				$em->flush();
+			
+				// TODO create OK code response
 				break;
 
 			default:

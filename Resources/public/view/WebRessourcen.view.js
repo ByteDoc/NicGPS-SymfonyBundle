@@ -38,7 +38,8 @@ sap.ui.jsview("net.bytedoc.nicgps.WebRessourcen", {
 			editable : true,
 			visibleRowCount : 5,
 			navigationMode : sap.ui.table.NavigationMode.Paginator,
-			toolbar : oToolbar
+			toolbar : oToolbar,
+			selectionMode : sap.ui.table.SelectionMode.Single
 		});
 		var watchedControls = [];
 		// ## ID ##
@@ -111,9 +112,9 @@ sap.ui.jsview("net.bytedoc.nicgps.WebRessourcen", {
 		jQuery.each(watchedControls, function(key, item) {
 			//item.attachChange(oController.dataChanged);
 			item.attachChange( function(oEvent) {
-				myDebug = this;
-				var oModel = this.getModel();
-				oModel.dataChanged(this);
+				oController.dataChanged(this);
+				//var oModel = this.getModel();
+				//oModel.dataChanged(this);
 			});
 		});
 		

@@ -38,8 +38,7 @@ sap.ui.jsview("net.bytedoc.nicgps.Dashboard", {
 		oModelDeadlinesPanel.init( {
 			entity : "Deadlines",
 			loadService : oApp.readDataService,
-			saveService : oApp.writeDataService,
-			autoSaveMode : "AutoSaveAll"
+			saveService : oApp.writeDataService
 		});
 		oModelDeadlinesPanel.loadAll();
 		oModelDeadlinesPanel.startAutoSave();

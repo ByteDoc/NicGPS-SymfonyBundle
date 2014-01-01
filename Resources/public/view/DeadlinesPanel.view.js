@@ -35,7 +35,8 @@ sap.ui.jsview("net.bytedoc.nicgps.DeadlinesPanel", {
 			editable : true,
 			visibleRowCount : 5,
 			navigationMode : sap.ui.table.NavigationMode.Paginator,
-			toolbar : oToolbar
+			toolbar : oToolbar,
+			selectionMode : sap.ui.table.SelectionMode.Single
 		});
 		var watchedControls = [];
 		// ## Datum ##
