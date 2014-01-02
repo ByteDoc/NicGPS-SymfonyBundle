@@ -1,6 +1,17 @@
+# prefix /gps/
 main:
     pattern:  /main/{name}
     defaults: { _controller: BytedocGpsBundle:Main:index, name:nic }
+
+login:
+    pattern:  /login
+    defaults: { _controller: BytedocGpsBundle:Security:login }
+
+logincheck:
+    pattern:  /logincheck
+
+logout:
+    pattern:  /logout
 
 read:
     pattern:  /read/{entity}

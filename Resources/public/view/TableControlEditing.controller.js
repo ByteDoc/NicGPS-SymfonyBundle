@@ -4,7 +4,8 @@ sap.ui.core.mvc.Controller.extend("net.bytedoc.nicgps.TableControlEditing", {
 	addRow: function(oEvent) {
 		var oModel = this.getModel();
 		var oButton = oEvent.getSource();
-		oModel.oData.unshift({ guid : net.bytedoc.Helper.createGuid() });
+		//oModel.oData.unshift({ guid : net.bytedoc.Helper.createGuid() });
+		oModel.oData.unshift({ });
 		oModel.refresh();
 		oModel.dataChanged();
 	},

@@ -1,0 +1,26 @@
+{% extends 'BytedocGpsBundle::layout.html.twig' %}
+
+{% block title %}
+GPS Login
+{% endblock %}
+
+{% block body %}
+
+	<div id='login'>
+		
+		<form action="{{ path('logincheck') }}" method="post">
+			<label for="username">Username:</label>
+			<input type="text" id="username" name="_username" />
+			
+			<label for="password">Password:</label>
+			<input type="password" id="password" name="_password" />
+			
+			<input type="submit" name="login" />
+		</form>
+		last username: {{ last_username }}<br />
+		error: {{ error }}<br />
+		
+	</div>
+
+{% endblock %}
+

@@ -18,6 +18,7 @@ class ReadController extends Controller
     {
 		$repository = $this->getDoctrine()->getRepository("BytedocGpsBundle:".$entity);
 		$objects = $repository->findAll();
+		// TODO do NOT read passwords or other sensitive data from Users!!!
 		
 		$jsonString = $this->serializeToJson($objects);
 		

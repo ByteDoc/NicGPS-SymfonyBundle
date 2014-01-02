@@ -1,35 +1,107 @@
 <?php
 namespace Bytedoc\GpsBundle\Entity;
 
-class Webressource
+use Symfony\Component\Security\Core\User\UserInterface;
+
+class User implements UserInterface, \Serializable
 {
-    protected $id;
+    private $id;
 
-    protected $guid;
+    private $username;
 
-    protected $category;
+    private $salt;
 
-    protected $title;
+    private $password;
 
-    protected $href;
+    private $email;
 
-    protected $rating;
+    private $isActive;
 	
 	/**
 	 * Copy attributes from another object
-	 * @param Webressource $copy
-	 * @return Webressource
+	 * @param User $copy
+	 * @return User
 	 */
 	 public function copyAllAttributes($copy)
 	 {
-		 $this->setGuid($copy->getGuid());
-		 $this->setCategory($copy->getCategory());
-		 $this->setTitle($copy->getTitle());
-		 $this->setHref($copy->getHref());
-		 $this->setRating($copy->getRating());
+		 $this->setUsername($copy->getUsername());
+		 $this->setEmail($copy->getEmail());
 		 
 		 return $this;
 	 }
+	
+    public function __construct()
+    {
+        $this->isActive = true;
+        $this->salt = md5(uniqid(null, true));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRoles()
+    {
+        return array('GPS_USER', 'ROLE_GPS_USER');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function eraseCredentials()
+    {
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function equals(UserInterface $user)
+    {
+        return $this->id === $user->getId();
+    }
+
+    /**
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+        ));
+    }
+
+    /**
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+        ) = unserialize($serialized);
+    }
 
     /**
      * Get id
@@ -42,117 +114,87 @@ class Webressource
     }
 
     /**
-     * Set guid
+     * Set username
      *
-     * @param guid $guid
-     * @return Webressource
+     * @param string $username
+     * @return User
      */
-    public function setGuid($guid)
+    public function setUsername($username)
     {
-        $this->guid = $guid;
+        $this->username = $username;
 
         return $this;
     }
 
     /**
-     * Get guid
+     * Set salt
      *
-     * @return guid 
+     * @param string $salt
+     * @return User
      */
-    public function getGuid()
+    public function setSalt($salt)
     {
-        return $this->guid;
-    }
-
-    /**
-     * Set category
-     *
-     * @param string $category
-     * @return Webressource
-     */
-    public function setCategory($category)
-    {
-        $this->category = $category;
+        $this->salt = $salt;
 
         return $this;
     }
 
     /**
-     * Get category
+     * Set password
+     *
+     * @param string $password
+     * @return User
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return User
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
      *
      * @return string 
      */
-    public function getCategory()
+    public function getEmail()
     {
-        return $this->category;
+        return $this->email;
     }
 
     /**
-     * Set title
+     * Set isActive
      *
-     * @param string $title
-     * @return Webressource
+     * @param boolean $isActive
+     * @return User
      */
-    public function setTitle($title)
+    public function setIsActive($isActive)
     {
-        $this->title = $title;
+        $this->isActive = $isActive;
 
         return $this;
     }
 
     /**
-     * Get title
+     * Get isActive
      *
-     * @return string 
+     * @return boolean 
      */
-    public function getTitle()
+    public function getIsActive()
     {
-        return $this->title;
-    }
-
-    /**
-     * Set href
-     *
-     * @param string $href
-     * @return Webressource
-     */
-    public function setHref($href)
-    {
-        $this->href = $href;
-
-        return $this;
-    }
-
-    /**
-     * Get href
-     *
-     * @return string 
-     */
-    public function getHref()
-    {
-        return $this->href;
-    }
-
-    /**
-     * Set rating
-     *
-     * @param integer $rating
-     * @return Webressource
-     */
-    public function setRating($rating)
-    {
-        $this->rating = $rating;
-
-        return $this;
-    }
-
-    /**
-     * Get rating
-     *
-     * @return integer 
-     */
-    public function getRating()
-    {
-        return $this->rating;
+        return $this->isActive;
     }
 }

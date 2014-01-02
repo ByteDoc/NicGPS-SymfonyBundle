@@ -16,7 +16,6 @@
 		
 		
 		// create the App "controller"
-		// TODO move this class into a separate file
 		var oApp = {
 			dataSaved : true,
 			init : function() {
@@ -103,12 +102,12 @@
 //				entity : "Dashboard",
 //				viewName : "net.bytedoc.nicgps.Dashboard"
 //			},
-			WI_portale : {
-				key : "wi_webressourcen",
-				text : "Web-Ressourcen",
+			WI_Users : {
+				key : "wi_users",
+				text : "Users",
 				view : null,
-				entity : "Webressource",
-				viewName : "net.bytedoc.nicgps.WebRessourcen"
+				entity : "User",
+				viewName : "net.bytedoc.nicgps.Users"
 			}
 		};
 		// create Models, Views and Workitems
@@ -121,7 +120,7 @@
 					saveService : oApp.writeDataService
 				});
 				oModels[item.entity].loadAll();
-				oModels[item.entity].startAutoSave();
+				//oModels[item.entity].startAutoSave();
 				oModels[item.entity].callbackDataChanged = oApp.eventDataChanged;
 			}
 			if(item.viewName != null) {
@@ -146,10 +145,10 @@
 			showTools: true,
 			showFeederTool: false,
 			showSearchTool: false,
-			appTitle: "Nic's GPS",
+			appTitle: "Max GPS & Administration",
 			showLogoutButton: false,
 			worksetItems: navigationItems,
-			content: shellWorksetItems["WI_portale"].view,
+			content: shellWorksetItems["WI_Users"].view,
 			worksetItemSelected: function(oEvent) {
 				var sId = oEvent.getParameter("id");
 				var oShell = oEvent.oSource;
@@ -176,7 +175,7 @@
 {% endblock %}
 
 {% block title %}
-UI5 meets Symfony
+GPS Administration
 {% endblock %}
 
 {% block body %}

@@ -1,6 +1,6 @@
 Bytedoc\GpsBundle\Entity\Webressource:
     type: entity
-    table: webressource
+    table: gps_webressources
     id:
         id:
             type: integer
