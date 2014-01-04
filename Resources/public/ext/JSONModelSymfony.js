@@ -109,7 +109,8 @@ sap.ui.model.json.JSONModel.extend("net.bytedoc.UI5.JSONModelSymfony", {
 		clearInterval(this.AutoSaveInterval);
 	},
 	checkForSave : function() {
-		if(this.unsaved) {
+		// only check autosave-Models
+		if(this.autosave && this.unsaved) {
 			//alert("auto-saving");
 			this.saveAll();
 			this.unsaved = false;

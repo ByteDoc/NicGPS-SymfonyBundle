@@ -65,7 +65,12 @@ class User implements UserInterface, \Serializable
      */
     public function getRoles()
     {
-        return array('GPS_USER', 'ROLE_GPS_USER');
+		// TODO assign only certain roles, make them part of the database user table
+		$roles = array('ROLE_GPS_USER');
+		if($this->username == 'Max') {
+			array_push($roles, 'ROLES_GPS_ADMIN');
+		}
+        return $roles;
     }
 
     /**

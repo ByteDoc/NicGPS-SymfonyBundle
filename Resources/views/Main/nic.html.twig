@@ -5,7 +5,6 @@
 	{{ parent() }}
 
 	<script>
-	//alert("{{ asset('bundles/gps/ext') }}");
 		// register the paths for required modules
 		jQuery.sap.registerModulePath("net.bytedoc.UI5","{{ asset('bundles/gps/ext') }}");
 		jQuery.sap.require("net.bytedoc.UI5.JSONModelSymfony");
@@ -13,170 +12,59 @@
 		jQuery.sap.registerModulePath("net.bytedoc.nicgps","{{ asset('bundles/gps/view') }}");
 		jQuery.sap.registerModulePath("net.bytedoc","{{ asset('bundles/gps/ext') }}");
 		jQuery.sap.require("net.bytedoc.Helper");
-		
-		
-		// create the App "controller"
-		// TODO move this class into a separate file
-		var oApp = {
-			dataSaved : true,
-			init : function() {
-				var app = this;
-				this.modelTimer = setInterval(function() { app.checkAllModels() }, 5000);
-			},
-			buttonSaveNow : null,
-			checkAllModels : function () {
-				//alert("checkAllModels");
-				var counterAll = 0;
-				var counterSaved = 0;
-				jQuery.each(oModels, function(key, item) {
-					if(!item.unsaved) {
-						counterSaved++;
-					}
-					counterAll++;
-				});
-				if(counterAll == counterSaved) {
-					if(!this.dataSaved) {
-						this.buttonSaveNowDeactivate();
-					}
-				} else {
-					this.buttonSaveNowActivate();
-				}
-				//alert("saved: " + counterSaved + " / " + counterAll);
-			},
-			buttonSaveNowTimeout : null,
-			buttonSaveNowActivate : function() {
-				this.buttonSaveNow.setText("save open changes now");
-				this.buttonSaveNow.setEnabled(true);
-				clearTimeout(this.buttonSaveNowTimeout);
-				$("#buttonSaveNow").fadeIn();
-				this.dataSaved = false;
-			},
-			buttonSaveNowDeactivate : function () {
-				this.buttonSaveNow.setText("all changes saved");
-				this.buttonSaveNow.setEnabled(false);
-				this.dataSaved = true;
-				this.buttonSaveNowTimeout = setTimeout(function() { $("#buttonSaveNow").fadeOut() }, 1000);
-			},
-			saveAllModels : function() {
-				jQuery.each(oModels, function(key, item) {
-					item.checkForSave();
-				});
-				this.checkAllModels();
-			},
-			eventDataChanged : function() {
-				var app = oApp;
-				app.buttonSaveNowActivate();
-			},
-			ajaxError : function(actionMessage, jqXHR, textStatus, errorThrown) {
-				alert(actionMessage);
-			}
-		};
-		
-		var oButtonSaveNow = new sap.ui.commons.Button({
-			id : "buttonSaveNow",
-			text : "",
-			enabled : false,
-			press : function() {
-				oApp.saveAllModels();
-			}
-		});
-		oApp.buttonSaveNow = oButtonSaveNow;
+
+		jQuery.sap.require("net.bytedoc.nicgps.AppController");
+		var oApp = net.bytedoc.nicgps.AppController;
+	
 		oApp.readDataService = '{{ path("read", {}) }}';
 		oApp.writeDataService = '{{ path("write", {}) }}';
-		
-		// Nic's GPS
-		// Application Structure:
-		//   - Shell as main UI element
-		//   - views that contain table controls for data presentation and editing
-		
+
 		// create all the Workset Items and View Array
+		// these are the necessary "global objects/arrays"
 		var oModels = {};
 		var oViews = {};
-		var navigationItems = []; // Navigation Items
+		var aNavigationItems = []; // Navigation Items
 		// initiate the structure that holds the Metadata for
 		//   Navigation, Views, Data Entities
-		var shellWorksetItems = {
+		var oShellWorksetItems = {
 //			WI_home : {
 //				key : "wi_home",
 //				text : "Home",
 //				view : null,
 //				entity : "Dashboard",
-//				viewName : "net.bytedoc.nicgps.Dashboard"
+//				viewName : "net.bytedoc.nicgps.Dashboard",
+//				autoSave : true,
+//				defaultContent : true
 //			},
 			WI_portale : {
 				key : "wi_webressourcen",
 				text : "Web-Ressourcen",
 				view : null,
 				entity : "Webressource",
-				viewName : "net.bytedoc.nicgps.WebRessourcen"
+				viewName : "net.bytedoc.nicgps.WebRessourcen",
+				autoSave : true,
+				defaultContent : true
 			}
+			
 		};
-		// create Models, Views and Workitems
-		jQuery.each(shellWorksetItems, function(key, item) {
-			if(item.entity != null) {
-				oModels[item.entity] = new net.bytedoc.UI5.JSONModelSymfony();
-				oModels[item.entity].init({
-					entity : item.entity,
-					loadService : oApp.readDataService,
-					saveService : oApp.writeDataService
-				});
-				oModels[item.entity].loadAll();
-				oModels[item.entity].startAutoSave();
-				oModels[item.entity].callbackDataChanged = oApp.eventDataChanged;
-			}
-			if(item.viewName != null) {
-				oViews[item.viewName] = sap.ui.view({
-					type : sap.ui.core.mvc.ViewType.JS,
-					viewName : item.viewName
-				});
-				item.view = oViews[item.viewName];
-				item.view.setModel(oModels[item.entity]);
-			}
-			navigationItems.push(new sap.ui.ux3.NavigationItem(key,{item:item.key,text:item.text}));
+		oApp.createModelsViewsNavigation(oShellWorksetItems);
+	
+		oShell = oApp.createShell({
+			id : "myShell",
+			appTitle : "{{ app.user.username }}'s GPS",
+			logoutPath : "{{ path('logout') }}"
 		});
-
-				
-		// Shell
-		var oShell = new sap.ui.ux3.Shell("myShell", {
-			designType: sap.ui.ux3.ShellDesignType.Crystal,
-				// ShellDesignType: Standard, Crystal, Light
-			headerType: sap.ui.ux3.ShellHeaderType.SlimNavigation,
-				// ShellHeaderType: Standard, BrandOnly, NoNavigation, SlimNavigation
-			showPane: true,
-			showTools: true,
-			showFeederTool: false,
-			showSearchTool: false,
-			appTitle: "Nic's GPS",
-			showLogoutButton: false,
-			worksetItems: navigationItems,
-			content: shellWorksetItems["WI_portale"].view,
-			worksetItemSelected: function(oEvent) {
-				var sId = oEvent.getParameter("id");
-				var oShell = oEvent.oSource;
-				oShell.setContent(shellWorksetItems[sId].view);
-			},
-			headerItems: [
-				oButtonSaveNow
-			]
-		});
-		
+	
 		oShell.placeAt('shell');
-		
-		
-		
+	
 		// Initialise the App "Controller"
 		oApp.init();
-		
-		
-		
-		var mydebug = {};
-		
 		
 	</script>
 {% endblock %}
 
 {% block title %}
-UI5 meets Symfony
+Nic's GPS
 {% endblock %}
 
 {% block body %}

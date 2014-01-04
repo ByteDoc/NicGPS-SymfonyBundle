@@ -17,10 +17,15 @@ class SecurityController extends Controller
             $error = $request->attributes->get(
                 SecurityContext::AUTHENTICATION_ERROR
             );
-        } else {
-            $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
+		} else {
+			$error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
             $session->remove(SecurityContext::AUTHENTICATION_ERROR);
         }
+		$simpleError = '';
+		if(isset($error)) {
+			$simpleError = 'Login failed';
+		}
+		
 
         return $this->render(
             'BytedocGpsBundle:Main:login.html.twig',
@@ -28,6 +33,7 @@ class SecurityController extends Controller
                 // last username entered by the user
                 'last_username' => $session->get(SecurityContext::LAST_USERNAME),
                 'error'         => $error,
+				'simpleError'   => $simpleError
             )
         );
 	}
