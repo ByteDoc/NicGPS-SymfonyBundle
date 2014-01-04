@@ -67,10 +67,11 @@ sap.ui.model.json.JSONModel.extend("net.bytedoc.UI5.JSONModelSymfony", {
 		// also restart the timer, we do not need to save every x seconds, if user keeps changing
 		if(this.AutoSaveStarted) {
 			this.restartAutoSave();
-		}
-		// tell the app controller that data has changed
-		if(jQuery.type(this.callbackDataChanged) == "function") {
-			this.callbackDataChanged();
+			// tell the app controller that data has changed
+			if(jQuery.type(this.callbackDataChanged) == "function") {
+				this.callbackDataChanged();
+			}
+			// TODO callback for non-autosave entities
 		}
 	},
 	
@@ -101,16 +102,19 @@ sap.ui.model.json.JSONModel.extend("net.bytedoc.UI5.JSONModelSymfony", {
 		this.startAutoSave();
 	},
 	startAutoSave : function () {
+		//alert("AutoSave started");
 		var that = this;
 		this.AutoSaveStarted = true;
 		this.AutoSaveInterval = setInterval(function() { that.checkForSave(); }, 5000);
 	},
 	stopAutoSave : function () {
+		//alert("AutoSave stopped");
 		clearInterval(this.AutoSaveInterval);
 	},
 	checkForSave : function() {
+		//alert("check for save");
 		// only check autosave-Models
-		if(this.autosave && this.unsaved) {
+		if(this.AutoSaveStarted && this.unsaved) {
 			//alert("auto-saving");
 			this.saveAll();
 			this.unsaved = false;

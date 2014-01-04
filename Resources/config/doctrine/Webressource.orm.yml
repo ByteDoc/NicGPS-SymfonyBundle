@@ -6,8 +6,6 @@ Bytedoc\GpsBundle\Entity\Webressource:
             type: integer
             generator: { strategy: AUTO }
     fields:
-        guid:
-            type: guid
         category:
             type: string
             length: 50

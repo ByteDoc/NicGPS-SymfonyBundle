@@ -17,14 +17,13 @@ net.bytedoc.nicgps.AppController = {
 	},
 	buttonSaveNow : null,
 	checkAllModels : function () {
-		//alert("checkAllModels");
 		var counterAll = 0;
 		var counterSaved = 0;
-		jQuery.each(oModels, function(key, item) {
+		jQuery.each(oModels, function(key, model) {
 			// only check autosave-Models
-			if(item.autoSave)
+			if(model.AutoSaveStarted)
 			{
-				if(!item.unsaved) {
+				if(!model.unsaved) {
 					counterSaved++;
 				}
 				counterAll++;
@@ -37,7 +36,6 @@ net.bytedoc.nicgps.AppController = {
 		} else {
 			this.buttonSaveNowActivate();
 		}
-		//alert("saved: " + counterSaved + " / " + counterAll);
 	},
 	buttonSaveNowTimeout : null,
 	buttonSaveNowActivate : function() {
