@@ -1,5 +1,5 @@
 <?php
-namespace Bytedoc\GpsBundle\Entity;
+namespace Bytedoc\Bundle\Gps\Entity;
 
 class Webressource
 {

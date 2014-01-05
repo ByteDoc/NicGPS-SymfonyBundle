@@ -1,12 +1,12 @@
 <?php
 
-namespace Bytedoc\GpsBundle\Controller;
+namespace Bytedoc\Bundle\Gps\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-use Bytedoc\GpsBundle\Helper\JsonHelper as JsonHelper;
+use Bytedoc\Bundle\Gps\Helper\JsonHelper as JsonHelper;
 
 class ReadController extends Controller
 {

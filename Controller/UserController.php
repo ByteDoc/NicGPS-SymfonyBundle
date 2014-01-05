@@ -1,6 +1,6 @@
 <?php
 
-namespace Bytedoc\GpsBundle\Controller;
+namespace Bytedoc\Bundle\Gps\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,12 +13,14 @@ use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
-use ByteDoc\GpsBundle\Helper\JsonHelper as JsonHelper;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
+use Bytedoc\Bundle\Gps\Helper\JsonHelper as JsonHelper;
 
 class UserController extends Controller
 {
 
-	private $entityFullPath = 'Bytedoc\\GpsBundle\\Entity\\User';
+	private $entityFullPath = 'Bytedoc\\Bundle\\Gps\\Entity\\User';
 	private $repositoryPath = "BytedocGpsBundle:User";
 	
 	private function checkAuthorization() {
@@ -33,7 +35,7 @@ class UserController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$query = $em->createQuery(
 			'SELECT u.id, u.username, u.email, u.isActive '.
-			'FROM Bytedoc\GpsBundle\Entity\User u');
+			'FROM Bytedoc\Bundle\Gps\Entity\User u');
 		$objects = $query->getResult();
 
 		$jsonString = JsonHelper::serializeToJson($objects);

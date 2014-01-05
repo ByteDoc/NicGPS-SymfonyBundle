@@ -1,4 +1,4 @@
-Bytedoc\GpsBundle\Entity\Webressource:
+Bytedoc\Bundle\Gps\Entity\Webressource:
     type: entity
     table: gps_webressources
     id:

@@ -1,6 +1,6 @@
 <?php
 
-namespace Bytedoc\GpsBundle;
+namespace Bytedoc\Bundle\Gps;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Bytedoc\GpsBundle\Controller;
+namespace Bytedoc\Bundle\Gps\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,10 +13,10 @@ use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
-use ByteDoc\GpsBundle\Entity\Webressource;
-use ByteDoc\GpsBundle\Entity\User;
+use Bytedoc\Bundle\Gps\Entity\Webressource;
+use Bytedoc\Bundle\Gps\Entity\User;
 
-use Bytedoc\GpsBundle\Helper\JsonHelper as JsonHelper;
+use Bytedoc\Bundle\Gps\Helper\JsonHelper as JsonHelper;
 
 class WriteController extends Controller
 {

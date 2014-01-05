@@ -1,4 +1,4 @@
-Bytedoc\GpsBundle\Entity\User:
+Bytedoc\Bundle\Gps\Entity\User:
     type: entity
     table: gps_users
     id:

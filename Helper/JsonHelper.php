@@ -1,6 +1,6 @@
 <?php
 
-namespace Bytedoc\GpsBundle\Helper;
+namespace Bytedoc\Bundle\Gps\Helper;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,7 +12,7 @@ use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
-//use ByteDoc\GpsBundle\Entity\User;
+//use Bytedoc\Bundle\Gps\Entity\User;
 
 class JsonHelper {
 

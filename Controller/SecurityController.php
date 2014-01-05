@@ -1,6 +1,6 @@
 <?php
 
-namespace Bytedoc\GpsBundle\Controller;
+namespace Bytedoc\Bundle\Gps\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
