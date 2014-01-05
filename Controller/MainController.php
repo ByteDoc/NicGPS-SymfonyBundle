@@ -10,6 +10,7 @@ class MainController extends Controller
     {
 		
 		switch (strtolower($this->getUser()->getUsername())) {
+		//switch ('nic') {
 			case 'max':
 				return $this->render('BytedocGpsBundle:Main:max.html.twig');
 				break;

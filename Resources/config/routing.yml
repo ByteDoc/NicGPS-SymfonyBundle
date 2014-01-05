@@ -1,7 +1,12 @@
 # prefix /gps/
+
 main:
     pattern:  /main
     defaults: { _controller: BytedocGpsBundle:Main:index }
+
+RootRedirect:
+    pattern:  /
+    defaults: { _controller: FrameworkBundle:Redirect:redirect, route:main }
 
 login:
     pattern:  /login
