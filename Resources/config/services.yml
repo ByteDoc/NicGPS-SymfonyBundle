@@ -1,5 +1,5 @@
 parameters:
-#    bytedoc_gps.example.class: Bytedoc\GpsBundle\Example
+#    bytedoc_gps.example.class: Bytedoc\Bundle\Gps\Example
 
 services:
 #    bytedoc_gps.example:

@@ -105,7 +105,7 @@ sap.ui.model.json.JSONModel.extend("net.bytedoc.UI5.JSONModelSymfony", {
 		//alert("AutoSave started");
 		var that = this;
 		this.AutoSaveStarted = true;
-		this.AutoSaveInterval = setInterval(function() { that.checkForSave(); }, 5000);
+		this.AutoSaveInterval = setInterval(function() { that.checkForSave(); }, 15000);
 	},
 	stopAutoSave : function () {
 		//alert("AutoSave stopped");

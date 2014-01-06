@@ -14,16 +14,26 @@ class ReadController extends Controller
 	// this is the general controller, specific entities must have their own controller
 	private $managedEntities = array('Webressource');
 	
+	private $entityFullPath = 'Bytedoc\\Bundle\\Gps\\Entity\\';
+	private $repositoryPath = "BytedocGpsBundle:";
+	
     public function readAction($entity)
     {
 		if(!in_array($entity, $this->managedEntities)) {
-			$response = $this->forward('BytedocGpsBundle:'.$entity.':read');
+			$response = $this->forward($this->repositoryPath.$entity.':read');
 			return $response;
 		}
 		
 		$em = $this->getDoctrine()->getManager();
-		$repository = $this->getDoctrine()->getRepository("BytedocGpsBundle:".$entity);
-		$objects = $repository->findAll();
+		
+		// read only the objects for the current user
+		if(method_exists($this->entityFullPath.$entity, "getUser")) {
+			$query = $em->createQuery('SELECT e FROM '.$this->entityFullPath.$entity.' e WHERE e.user = '.$this->getUser()->getId());
+			$objects = $query->getResult();
+		} else {
+			$repository = $this->getDoctrine()->getRepository($this->repositoryPath.$entity);
+			$objects = $repository->findAll();
+		}
 
 		
 		$jsonString = JsonHelper::serializeToJson($objects);

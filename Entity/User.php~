@@ -1,5 +1,5 @@
 <?php
-namespace Bytedoc\GpsBundle\Entity;
+namespace Bytedoc\Bundle\Gps\Entity;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -16,6 +16,8 @@ class User implements UserInterface, \Serializable
     private $email;
 
     private $isActive;
+	
+	protected $webressources;
 	
 	/**
 	 * Copy attributes from another object
@@ -34,6 +36,8 @@ class User implements UserInterface, \Serializable
     {
         $this->isActive = true;
         $this->salt = md5(uniqid(null, true));
+		
+		$this->webressources = new ArrayCollection();
     }
 
     /**
@@ -68,7 +72,7 @@ class User implements UserInterface, \Serializable
 		// TODO assign only certain roles, make them part of the database user table
 		$roles = array('ROLE_GPS_USER');
 		if($this->username == 'Max') {
-			array_push($roles, 'ROLES_GPS_ADMIN');
+			array_push($roles, 'ROLE_GPS_ADMIN');
 		}
         return $roles;
     }

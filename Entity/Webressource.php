@@ -155,4 +155,32 @@ class Webressource
     {
         return $this->rating;
     }
+    /**
+     * @var \Bytedoc\Bundle\Gps\Entity\User
+     */
+    private $user;
+
+
+    /**
+     * Set user
+     *
+     * @param \Bytedoc\Bundle\Gps\Entity\User $user
+     * @return Webressource
+     */
+    public function setUser(\Bytedoc\Bundle\Gps\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Bytedoc\Bundle\Gps\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 }

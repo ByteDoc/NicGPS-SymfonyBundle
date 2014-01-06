@@ -17,6 +17,8 @@ class User implements UserInterface, \Serializable
 
     private $isActive;
 	
+	protected $webressources;
+	
 	/**
 	 * Copy attributes from another object
 	 * @param User $copy
@@ -34,6 +36,8 @@ class User implements UserInterface, \Serializable
     {
         $this->isActive = true;
         $this->salt = md5(uniqid(null, true));
+		
+		$this->webressources = new ArrayCollection();
     }
 
     /**

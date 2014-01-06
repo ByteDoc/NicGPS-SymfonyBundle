@@ -17,3 +17,10 @@ Bytedoc\Bundle\Gps\Entity\Webressource:
             length: 256
         rating:
             type: integer
+    manyToOne:
+        user:
+            targetEntity: User
+            inversedBy: webressources
+            joinColumn:
+                name: user_id
+                referencedColumnName: id

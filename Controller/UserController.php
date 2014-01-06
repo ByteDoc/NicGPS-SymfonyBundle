@@ -35,7 +35,7 @@ class UserController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$query = $em->createQuery(
 			'SELECT u.id, u.username, u.email, u.isActive '.
-			'FROM Bytedoc\Bundle\Gps\Entity\User u');
+			'FROM '.$this->entityFullPath.' u');
 		$objects = $query->getResult();
 
 		$jsonString = JsonHelper::serializeToJson($objects);

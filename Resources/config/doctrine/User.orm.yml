@@ -22,3 +22,8 @@ Bytedoc\Bundle\Gps\Entity\User:
             unique: true
         isActive:
             type: boolean
+    oneToMany:
+        # don't forget to init the collection in the __construct() method of the entity
+        webressources:
+            targetEntity: Webressource
+            mappedBy: user

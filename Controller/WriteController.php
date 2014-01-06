@@ -25,11 +25,14 @@ class WriteController extends Controller
 	// this is the general controller, specific entities must have their own controller
 	private $managedEntities = array('Webressource');
 	
+	private $entityFullPath = 'Bytedoc\\Bundle\\Gps\\Entity\\';
+	private $repositoryPath = "BytedocGpsBundle:";
+	
 	
     public function writeAction($entity)
     {
 		if(!in_array($entity, $this->managedEntities)) {
-			$response = $this->forward('BytedocGpsBundle:'.$entity.':write');
+			$response = $this->forward($this->repositoryPath.$entity.':write');
 			return $response;
 		}
 		
@@ -46,20 +49,33 @@ class WriteController extends Controller
 			case 'entity': // update and create
 				$array = json_decode($request->request->get("json"));
 				$em = $this->getDoctrine()->getManager();
-				$repository = $em->getRepository("BytedocGpsBundle:".$entity);
+				$repository = $em->getRepository($this->repositoryPath.$entity);
 				foreach($array as $arrayItem) {
 					unset($db_object);
 					if(property_exists($arrayItem,"id")) {
 						$db_object = $repository->find($arrayItem->id);
 					}
-					$new_object = $serializer->denormalize($arrayItem,'Bytedoc\\GpsBundle\\Entity\\'.$entity,'json');
+					$new_object = $serializer->denormalize($arrayItem,$this->entityFullPath.$entity,'json');
 					if(!isset($db_object)) {
-						$entityClassname = 'ByteDoc\\GpsBundle\\Entity\\'.$entity;
+						$entityClassname = $this->entityFullPath.$entity;
 						$db_object = new $entityClassname();
+						if(method_exists($db_object, "setUser")) {
+							$db_object->setUser($this->getUser());
+						}
 						// TODO set default values for new objects
 						$em->persist($db_object);
 					}
-					$db_object->copyAllAttributes($new_object);
+					// save only if current object "belongs" to the current user
+					if(method_exists($db_object, "getUser")) {
+						if($db_object->getUser()->getId() == $this->getUser()->getId()) {
+							$db_object->copyAllAttributes($new_object);
+						} else {
+							// not allowed to save
+						}
+					} else {
+						// no user-relationship established, save allowed
+						$db_object->copyAllAttributes($new_object);
+					}
 					
 				}
 				$em->flush();
@@ -70,12 +86,24 @@ class WriteController extends Controller
 			case 'delete':
 				$arrayItem = json_decode($request->request->get("json"));
 				$em = $this->getDoctrine()->getManager();
-				$repository = $em->getRepository("BytedocGpsBundle:".$entity);
+				$repository = $em->getRepository($this->repositoryPath.$entity);
 				if(property_exists($arrayItem,"id")) {
 					$db_object = $repository->find($arrayItem->id);
 				}
 				if(isset($db_object)) {
-					$em->remove($db_object);
+					
+					// delete only if current object "belongs" to the current user
+					if(method_exists($db_object, "getUser")) {
+						if($db_object->getUser()->getId() == $this->getUser()->getId()) {
+							$em->remove($db_object);
+						} else {
+							// not allowed to delete
+							return JsonHelper::getJsonResponseError($this, "");
+						}
+					} else {
+						// no user-relationship established, delete allowed
+						$em->remove($db_object);
+					}
 				}
 				$em->flush();
 			

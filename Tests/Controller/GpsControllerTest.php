@@ -1,6 +1,6 @@
 <?php
 
-namespace Bytedoc\GpsBundle\Tests\Controller;
+namespace Bytedoc\Bundle\Gps\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
