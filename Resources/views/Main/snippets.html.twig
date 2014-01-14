@@ -1,0 +1,101 @@
+
+
+oShell.insertPaneBarItem(new sap.ui.core.Item("PI_Links", {
+			key : "pi_links",
+			text : "Links"
+		} ), 0);
+		
+		var oPaneBarContentLinks = new sap.ui.commons.layout.MatrixLayout("PiLayoutLinks", {
+			columns : 2,
+			layoutFixed : false,
+			rows : [
+				new sap.ui.commons.layout.MatrixLayoutRow({
+					cells : [
+						new sap.ui.commons.layout.MatrixLayoutCell({
+							padding : sap.ui.commons.layout.Padding.Both,
+							content : [
+								new sap.ui.commons.Link("linkPocket", {
+									text : "Pocket",
+									href : "http://getpocket.com",
+									target : "_new"
+								})
+							]
+						}),
+						new sap.ui.commons.layout.MatrixLayoutCell({
+							padding : sap.ui.commons.layout.Padding.Both,
+							content : [
+								new sap.ui.commons.Link("linkPocket1", {
+									text : "Pocket",
+									href : "http://getpocket.com",
+									target : "_new"
+								})
+							]
+						})
+					]
+				}),
+				new sap.ui.commons.layout.MatrixLayoutRow({
+					cells : [
+						new sap.ui.commons.layout.MatrixLayoutCell({
+							padding : sap.ui.commons.layout.Padding.Both,
+							content : [
+								new sap.ui.commons.Link({
+									text : "Feedly",
+									href : "http://feedly.com",
+									target : "_new"
+								})
+							]
+						}),
+						new sap.ui.commons.layout.MatrixLayoutCell({
+							padding : sap.ui.commons.layout.Padding.Both,
+							content : [
+								new sap.ui.commons.Link({
+									text : "Feedly",
+									href : "http://feedly.com",
+									target : "_new"
+								})
+							]
+						})
+					]
+				}),
+				new sap.ui.commons.layout.MatrixLayoutRow({
+					cells : [
+						new sap.ui.commons.layout.MatrixLayoutCell({
+							padding : sap.ui.commons.layout.Padding.Both,
+							content : [
+								new sap.ui.commons.Link({
+									text : "Facebook",
+									href : "http://www.facebook.com",
+									target : "_new"
+								})
+							]
+						}),
+						new sap.ui.commons.layout.MatrixLayoutCell({
+							padding : sap.ui.commons.layout.Padding.Both,
+							content : [
+								new sap.ui.commons.Link({
+									text : "Facebook",
+									href : "http://www.facebook.com",
+									target : "_new"
+								})
+							]
+						})
+					]
+				})
+			]
+		});
+		
+		oApp.paneBarContentLinks = oPaneBarContentLinks;
+		
+		oShell.attachPaneBarItemSelected( function(oEvent) {
+			var sKey = oEvent.getParameter("key");
+			var oShell = oEvent.oSource;
+			switch (sKey) {
+			case "pi_links":
+				oShell.setPaneContent(oPaneBarContentLinks, false);
+				break;
+			default:
+				break;
+			}
+		});
+
+		

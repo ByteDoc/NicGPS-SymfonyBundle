@@ -17,7 +17,16 @@ class User implements UserInterface, \Serializable
 
     private $isActive;
 	
-	protected $webressources;
+	/**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $webressources;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $books;
+
 	
 	/**
 	 * Copy attributes from another object
@@ -38,6 +47,7 @@ class User implements UserInterface, \Serializable
         $this->salt = md5(uniqid(null, true));
 		
 		$this->webressources = new ArrayCollection();
+        $this->books = new ArrayCollection();
     }
 
     /**
@@ -205,5 +215,71 @@ class User implements UserInterface, \Serializable
     public function getIsActive()
     {
         return $this->isActive;
+    }
+
+    /**
+     * Add webressources
+     *
+     * @param \Bytedoc\Bundle\Gps\Entity\Webressource $webressources
+     * @return User
+     */
+    public function addWebressource(\Bytedoc\Bundle\Gps\Entity\Webressource $webressources)
+    {
+        $this->webressources[] = $webressources;
+
+        return $this;
+    }
+
+    /**
+     * Remove webressources
+     *
+     * @param \Bytedoc\Bundle\Gps\Entity\Webressource $webressources
+     */
+    public function removeWebressource(\Bytedoc\Bundle\Gps\Entity\Webressource $webressources)
+    {
+        $this->webressources->removeElement($webressources);
+    }
+
+    /**
+     * Get webressources
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getWebressources()
+    {
+        return $this->webressources;
+    }
+
+    /**
+     * Add books
+     *
+     * @param \Bytedoc\Bundle\Gps\Entity\Book $books
+     * @return User
+     */
+    public function addBook(\Bytedoc\Bundle\Gps\Entity\Book $books)
+    {
+        $this->books[] = $books;
+
+        return $this;
+    }
+
+    /**
+     * Remove books
+     *
+     * @param \Bytedoc\Bundle\Gps\Entity\Book $books
+     */
+    public function removeBook(\Bytedoc\Bundle\Gps\Entity\Book $books)
+    {
+        $this->books->removeElement($books);
+    }
+
+    /**
+     * Get books
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getBooks()
+    {
+        return $this->books;
     }
 }

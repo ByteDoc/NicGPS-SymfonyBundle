@@ -12,7 +12,7 @@ class ReadController extends Controller
 {
 	// only allow these entities to be managed by the read controller
 	// this is the general controller, specific entities must have their own controller
-	private $managedEntities = array('Webressource');
+	private $managedEntities = array('Webressource', 'Book');
 	
 	private $entityFullPath = 'Bytedoc\\Bundle\\Gps\\Entity\\';
 	private $repositoryPath = "BytedocGpsBundle:";
@@ -34,7 +34,6 @@ class ReadController extends Controller
 			$repository = $this->getDoctrine()->getRepository($this->repositoryPath.$entity);
 			$objects = $repository->findAll();
 		}
-
 		
 		$jsonString = JsonHelper::serializeToJson($objects);
 		

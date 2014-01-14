@@ -27,3 +27,7 @@ Bytedoc\Bundle\Gps\Entity\User:
         webressources:
             targetEntity: Webressource
             mappedBy: user
+    oneToMany:
+        books:
+            targetEntity: Book
+            mappedBy: user

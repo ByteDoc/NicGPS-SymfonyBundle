@@ -6,11 +6,11 @@
 
 	<script>
 		// register the paths for required modules
-		jQuery.sap.registerModulePath("net.bytedoc.UI5","{{ asset('bundles/gps/ext') }}");
+		jQuery.sap.registerModulePath("net.bytedoc.UI5","{{ asset('bundles/bytedocgps/ext') }}");
 		jQuery.sap.require("net.bytedoc.UI5.JSONModelSymfony");
 			// JSONModelPHPFile is required directly, because class used directly
-		jQuery.sap.registerModulePath("net.bytedoc.nicgps","{{ asset('bundles/gps/view') }}");
-		jQuery.sap.registerModulePath("net.bytedoc","{{ asset('bundles/gps/ext') }}");
+		jQuery.sap.registerModulePath("net.bytedoc.nicgps","{{ asset('bundles/bytedocgps/view') }}");
+		jQuery.sap.registerModulePath("net.bytedoc","{{ asset('bundles/bytedocgps/ext') }}");
 		jQuery.sap.require("net.bytedoc.Helper");
 
 		jQuery.sap.require("net.bytedoc.nicgps.AppController");
@@ -36,6 +36,15 @@
 //				autoSave : true,
 //				defaultContent : true
 //			},
+			WI_books : {
+				key : "wi_books",
+				text : "Bücher",
+				view : null,
+				entity : "Book",
+				viewName : "net.bytedoc.nicgps.Books",
+				autoSave : true,
+				defaultContent : false
+			},
 			WI_portale : {
 				key : "wi_webressourcen",
 				text : "Web-Ressourcen",
@@ -54,7 +63,8 @@
 			appTitle : "{{ app.user.username }}'s GPS",
 			logoutPath : "{{ path('logout') }}"
 		});
-	
+		
+
 		oShell.placeAt('shell');
 	
 		// Initialise the App "Controller"

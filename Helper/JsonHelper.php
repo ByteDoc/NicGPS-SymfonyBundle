@@ -12,16 +12,20 @@ use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
+use JMS\Serializer\SerializerBuilder;
+
 //use Bytedoc\Bundle\Gps\Entity\User;
 
 class JsonHelper {
 
 	public static function serializeToJson($object)
 	{
-		$encoders = array(new XmlEncoder(), new JsonEncoder());
-		$normalizers = array(new GetSetMethodNormalizer());
+		//$encoders = array(new XmlEncoder(), new JsonEncoder());
+		//$normalizers = array(new GetSetMethodNormalizer());
 
-		$serializer = new Serializer($normalizers, $encoders);
+		//$serializer = new Serializer($normalizers, $encoders);
+		
+		$serializer = \JMS\Serializer\SerializerBuilder::create()->build();
 		
 		return $serializer->serialize($object, 'json');
 	}

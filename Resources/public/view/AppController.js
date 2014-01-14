@@ -92,6 +92,7 @@ net.bytedoc.nicgps.AppController = {
 			aNavigationItems.push(new sap.ui.ux3.NavigationItem(key,{item:item.key,text:item.text}));
 			if(item.defaultContent) {
 				oApp.defaultShellContent = item.view;
+				oApp.defaultShellSelectedWorksetItem = key;
 			}
 		});
 	},
@@ -122,6 +123,7 @@ net.bytedoc.nicgps.AppController = {
 			showLogoutButton: false,
 			worksetItems: aNavigationItems,
 			content: oApp.defaultShellContent,
+			selectedWorksetItem: oApp.defaultShellSelectedWorksetItem,
 			worksetItemSelected: function(oEvent) {
 				var sId = oEvent.getParameter("id");
 				var oShell = oEvent.oSource;

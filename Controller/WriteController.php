@@ -23,7 +23,7 @@ class WriteController extends Controller
 	
 	// only allow these entities to be managed by the read controller
 	// this is the general controller, specific entities must have their own controller
-	private $managedEntities = array('Webressource');
+	private $managedEntities = array('Webressource', 'Book');
 	
 	private $entityFullPath = 'Bytedoc\\Bundle\\Gps\\Entity\\';
 	private $repositoryPath = "BytedocGpsBundle:";
@@ -61,6 +61,9 @@ class WriteController extends Controller
 						$db_object = new $entityClassname();
 						if(method_exists($db_object, "setUser")) {
 							$db_object->setUser($this->getUser());
+						}
+						if(method_exists($db_object, "setDefaultAttributes")) {
+							$db_object->setDefaultAttributes();
 						}
 						// TODO set default values for new objects
 						$em->persist($db_object);

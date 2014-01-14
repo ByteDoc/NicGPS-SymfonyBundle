@@ -1,41 +1,44 @@
 <?php
 namespace Bytedoc\Bundle\Gps\Entity;
 
-class Webressource
+class Book
 {
     protected $id;
-
-    protected $guid;
 
     protected $category;
 
     protected $title;
 
-    protected $href;
+    protected $author;
 
-    protected $rating;
+    protected $href_book;
+
+    protected $href_reference;
+
+    protected $notes;
 
     /**
      * @var \Bytedoc\Bundle\Gps\Entity\User
      */
     private $user;
 
-	
+
 	/**
 	 * Copy attributes from another object
 	 * @param Webressource $copy
 	 * @return Webressource
 	 */
-	 public function copyAllAttributes($copy)
-	 {
-		 $this->setGuid($copy->getGuid());
-		 $this->setCategory($copy->getCategory());
-		 $this->setTitle($copy->getTitle());
-		 $this->setHref($copy->getHref());
-		 $this->setRating($copy->getRating());
-		 
-		 return $this;
-	 }
+	public function copyAllAttributes($copy)
+	{
+		$this->setCategory($copy->getCategory());
+        $this->setTitle($copy->getTitle());
+        $this->setAuthor($copy->getAuthor());
+		$this->setHrefBook($copy->getHrefBook());
+		$this->setHrefReference($copy->getHrefReference());
+		$this->setNotes($copy->getNotes());
+		
+		return $this;
+	}
 
     /**
      * Get id
@@ -48,56 +51,10 @@ class Webressource
     }
 
     /**
-     * Set guid
-     *
-     * @param guid $guid
-     * @return Webressource
-     */
-    public function setGuid($guid)
-    {
-        $this->guid = $guid;
-
-        return $this;
-    }
-
-    /**
-     * Get guid
-     *
-     * @return guid 
-     */
-    public function getGuid()
-    {
-        return $this->guid;
-    }
-
-    /**
-     * Set category
-     *
-     * @param string $category
-     * @return Webressource
-     */
-    public function setCategory($category)
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    /**
-     * Get category
-     *
-     * @return string 
-     */
-    public function getCategory()
-    {
-        return $this->category;
-    }
-
-    /**
      * Set title
      *
      * @param string $title
-     * @return Webressource
+     * @return Book
      */
     public function setTitle($title)
     {
@@ -117,57 +74,102 @@ class Webressource
     }
 
     /**
-     * Set href
+     * Set category
      *
-     * @param string $href
-     * @return Webressource
+     * @param string $category
+     * @return Book
      */
-    public function setHref($href)
+    public function setCategory($category)
     {
-        $this->href = $href;
+        $this->category = $category;
 
         return $this;
     }
 
     /**
-     * Get href
+     * Get category
      *
      * @return string 
      */
-    public function getHref()
+    public function getCategory()
     {
-        return $this->href;
+        return $this->category;
     }
 
     /**
-     * Set rating
+     * Set author
      *
-     * @param integer $rating
-     * @return Webressource
+     * @param string $author
+     * @return Book
      */
-    public function setRating($rating)
+    public function setAuthor($author)
     {
-        $this->rating = $rating;
+        $this->author = $author;
 
         return $this;
     }
 
     /**
-     * Get rating
+     * Get author
      *
-     * @return integer 
+     * @return string 
      */
-    public function getRating()
+    public function getAuthor()
     {
-        return $this->rating;
+        return $this->author;
     }
 
+    /**
+     * Set href_book
+     *
+     * @param string $hrefBook
+     * @return Book
+     */
+    public function setHrefBook($hrefBook)
+    {
+        $this->href_book = $hrefBook;
+
+        return $this;
+    }
+
+    /**
+     * Get href_book
+     *
+     * @return string 
+     */
+    public function getHrefBook()
+    {
+        return $this->href_book;
+    }
+
+    /**
+     * Set href_reference
+     *
+     * @param string $hrefReference
+     * @return Book
+     */
+    public function setHrefReference($hrefReference)
+    {
+        $this->href_reference = $hrefReference;
+
+        return $this;
+    }
+
+    /**
+     * Get href_reference
+     *
+     * @return string 
+     */
+    public function getHrefReference()
+    {
+        return $this->href_reference;
+    }
 
     /**
      * Set user
      *
      * @param \Bytedoc\Bundle\Gps\Entity\User $user
-     * @return Webressource
+     * @return Book
      */
     public function setUser(\Bytedoc\Bundle\Gps\Entity\User $user = null)
     {
