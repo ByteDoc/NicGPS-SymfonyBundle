@@ -55,8 +55,11 @@ class WriteController extends Controller
 					if(property_exists($arrayItem,"id")) {
 						$db_object = $repository->find($arrayItem->id);
 					}
+					// var_dump($arrayItem);
 					$new_object = $serializer->denormalize($arrayItem,$this->entityFullPath.$entity,'json');
+					// var_dump($new_object);
 					if(!isset($db_object)) {
+						// no object found, CREATE a new one
 						$entityClassname = $this->entityFullPath.$entity;
 						$db_object = new $entityClassname();
 						if(method_exists($db_object, "setUser")) {
@@ -79,6 +82,7 @@ class WriteController extends Controller
 						// no user-relationship established, save allowed
 						$db_object->copyAllAttributes($new_object);
 					}
+					// var_dump($db_object);
 					
 				}
 				$em->flush();

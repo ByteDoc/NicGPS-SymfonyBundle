@@ -11,9 +11,9 @@ class Book
 
     protected $author;
 
-    protected $href_book;
+    protected $hrefbook;
 
-    protected $href_reference;
+    protected $hrefreference;
 
     protected $notes;
 
@@ -33,9 +33,11 @@ class Book
 		$this->setCategory($copy->getCategory());
         $this->setTitle($copy->getTitle());
         $this->setAuthor($copy->getAuthor());
-		$this->setHrefBook($copy->getHrefBook());
-		$this->setHrefReference($copy->getHrefReference());
-		$this->setNotes($copy->getNotes());
+		$this->setHrefbook($copy->getHrefbook());
+        $this->setHrefreference($copy->getHrefreference());
+        $this->setHrefbooktext($copy->getHrefbooktext());
+        $this->setHrefreferencetext($copy->getHrefreferencetext());
+        $this->setNotes($copy->getNotes());
 		
 		return $this;
 	}
@@ -49,8 +51,10 @@ class Book
         $this->setCategory("");
         $this->setTitle("");
         $this->setAuthor("");
-        $this->setHrefBook("");
-        $this->setHrefReference("");
+        $this->setHrefbook("");
+        $this->setHrefreference("");
+        $this->setHrefbooktext("");
+        $this->setHrefreferencetext("");
         $this->setNotes("");
         
         return $this;
@@ -142,55 +146,55 @@ class Book
     }
 
     /**
-     * Set href_book
+     * Set hrefbook
      *
-     * @param string $hrefBook
+     * @param string $hrefbook
      * @return Book
      */
-    public function setHrefBook($hrefBook)
+    public function setHrefbook($hrefbook)
     {
-        if(isset($hrefBook))
+        if(isset($hrefbook))
         {
-            $this->href_book = $hrefBook;
+            $this->hrefbook = $hrefbook;
         }
 
         return $this;
     }
 
     /**
-     * Get href_book
+     * Get hrefbook
      *
      * @return string 
      */
-    public function getHrefBook()
+    public function getHrefbook()
     {
-        return $this->href_book;
+        return $this->hrefbook;
     }
 
     /**
-     * Set href_reference
+     * Set hrefreference
      *
-     * @param string $hrefReference
+     * @param string $hrefreference
      * @return Book
      */
-    public function setHrefReference($hrefReference)
+    public function setHrefreference($hrefreference)
     {
-        if(isset($hrefReference))
+        if(isset($hrefreference))
         {
-            $this->href_reference = $hrefReference;
+            $this->hrefreference = $hrefreference;
         }
 
         return $this;
     }
 
     /**
-     * Get href_reference
+     * Get hrefreference
      *
      * @return string 
      */
-    public function getHrefReference()
+    public function getHrefreference()
     {
-        return $this->href_reference;
+        return $this->hrefreference;
     }
 
     /**
@@ -240,5 +244,70 @@ class Book
     public function getNotes()
     {
         return $this->notes;
+    }
+
+
+
+    /**
+     * @var string
+     */
+    private $hrefbooktext;
+
+    /**
+     * Set hrefbooktext
+     *
+     * @param string $hrefbooktext
+     * @return Book
+     */
+    public function setHrefbooktext($hrefbooktext)
+    {
+        if(isset($hrefbooktext))
+        {
+            $this->hrefbooktext = $hrefbooktext;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get hrefbooktext
+     *
+     * @return string 
+     */
+    public function getHrefbooktext()
+    {
+        return $this->hrefbooktext;
+    }
+
+    /**
+     * @var string
+     */
+    private $hrefreferencetext;
+
+
+    /**
+     * Set hrefreferencetext
+     *
+     * @param string $hrefreferencetext
+     * @return Book
+     */
+    public function setHrefreferencetext($hrefreferencetext)
+    {
+        if(isset($hrefreferencetext))
+        {
+            $this->hrefreferencetext = $hrefreferencetext;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get hrefreferencetext
+     *
+     * @return string 
+     */
+    public function getHrefreferencetext()
+    {
+        return $this->hrefreferencetext;
     }
 }

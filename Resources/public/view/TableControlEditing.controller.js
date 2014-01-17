@@ -7,7 +7,7 @@ sap.ui.core.mvc.Controller.extend("net.bytedoc.nicgps.TableControlEditing", {
 		//oModel.oData.unshift({ guid : net.bytedoc.Helper.createGuid() });
 		oModel.oData.unshift({ });
 		oModel.refresh();
-		oModel.dataChanged();
+		oModel.dataChanged("/0");
 	},
 	
 	deleteRow: function(oEvent) {
@@ -26,10 +26,15 @@ sap.ui.core.mvc.Controller.extend("net.bytedoc.nicgps.TableControlEditing", {
 		var selectedIndices = oTable.getSelectedIndices();
 		// deleting of multiple rows does not work yet!
 		// indices get changed during deletion, wrong entries get deleted
+		var dataIndices = [];
 		jQuery.each(selectedIndices, function(index, value) {
-			var indexToDelete = oTable.getContextByIndex(value).sPath.replace(/^\//g,'');
-			oModel.deleteRowByIndex(indexToDelete);
+			dataIndices.push(oTable.getContextByIndex(value).sPath.replace(/^\//g,''));
 		});
+		dataIndices.sort();
+		for (var i = dataIndices.length - 1; i >= 0; i--) {
+			oModel.deleteRowByIndex(dataIndices[i]);
+		};
+
 		oModel.refresh();
 	},
 	

@@ -89,6 +89,9 @@ net.bytedoc.nicgps.AppController = {
 				item.view = oViews[item.viewName];
 				item.view.setModel(oModels[item.entity]);
 			}
+			if(item.view.controls != null) {
+				oModels[item.entity].controls = item.view.controls;
+			}
 			aNavigationItems.push(new sap.ui.ux3.NavigationItem(key,{item:item.key,text:item.text}));
 			if(item.defaultContent) {
 				oApp.defaultShellContent = item.view;

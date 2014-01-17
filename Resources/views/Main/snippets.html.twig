@@ -98,4 +98,12 @@ oShell.insertPaneBarItem(new sap.ui.core.Item("PI_Links", {
 			}
 		});
 
+
+
+save: function(oEvent) {
+		var oModel = this.getModel();
+		var tableIndex = oModel.controls.table.getSelectedIndex();
+		var context = oModel.controls.table.getContextByIndex(tableIndex);
+		oModel.saveByIndex(context.getPath());
+	}
 		

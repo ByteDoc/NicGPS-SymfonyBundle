@@ -20,7 +20,7 @@ Bytedoc\Bundle\Gps\Entity\Webressource:
     manyToOne:
         user:
             targetEntity: User
-            inversedBy: webressources
+            #inversedBy: webressources
             joinColumn:
                 name: user_id
                 referencedColumnName: id

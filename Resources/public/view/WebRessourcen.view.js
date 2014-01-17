@@ -5,6 +5,8 @@ sap.ui.jsview("net.bytedoc.nicgps.WebRessourcen", {
 	getControllerName: function() {
 		return "net.bytedoc.nicgps.TableControlEditing";
 	},
+
+	controls : {},
 	
 	// content of the view: editable Table Control with Toolbar
 	createContent: function(oController) {
@@ -119,7 +121,10 @@ sap.ui.jsview("net.bytedoc.nicgps.WebRessourcen", {
 		});
 		
 		oTable.bindRows("/");
-		// #### END Table ####	
+		// #### END Table ####
+
+		// these controls are needed by the controller
+        this.controls.table = oTable;	
 		
 		return oTable;
 	}

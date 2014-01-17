@@ -22,12 +22,14 @@ Bytedoc\Bundle\Gps\Entity\User:
             unique: true
         isActive:
             type: boolean
-    oneToMany:
-        # don't forget to init the collection in the __construct() method of the entity
-        webressources:
-            targetEntity: Webressource
-            mappedBy: user
-    oneToMany:
-        books:
-            targetEntity: Book
-            mappedBy: user
+    # oneToMany is only needed for BI-directional mappings
+    # see http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/association-mapping.html
+    #oneToMany:
+    #    # don't forget to init the collection in the __construct() method of the entity
+    #    webressources:
+    #        targetEntity: Webressource
+    #        mappedBy: user
+    #oneToMany:
+    #    books:
+    #        targetEntity: Book
+    #        mappedBy: user

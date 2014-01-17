@@ -9,6 +9,8 @@ sap.ui.model.json.JSONModel.extend("net.bytedoc.UI5.JSONModelSymfony", {
 	entity : "",
 	
 	changedPaths : [],
+
+	oDetail : {},
 	
 	
 	// initialize with the necessary information
@@ -23,18 +25,36 @@ sap.ui.model.json.JSONModel.extend("net.bytedoc.UI5.JSONModelSymfony", {
 		// only save the changed paths
 		var arrayToSave = [];
 		var oData = this.oData;
+		var index = 0;
 		jQuery.each(this.changedPaths, function(index, value) {
-			var index = value.replace(/^\//g,'');
+			index = this.pathToIndex(value);
 			arrayToSave.push(oData[index]);
 		});
 		// create JSON string for the changed paths
 		var jsonString = JSON.stringify(arrayToSave);
 		//var jsonString = this.getJSON(); // ALL of oData
+		this.saveAjaxRequest(jsonString);
+	},
+
+	// save specific data entry by index
+	saveByIndex : function(index) {
+		index = this.pathToIndex(index);
+		// alert("saving " + index);
+		var arrayToSave = [];
+		var oData = this.oData;
+		// saveService expects an array of data entries, so send a single entry as array as well
+		arrayToSave.push(oData[index]);
+		var jsonString = JSON.stringify(arrayToSave);
+		this.saveAjaxRequest(jsonString);
+	},
+
+	saveAjaxRequest : function(jsonString) {
 		jQuery.ajax({
 			url: this.getSaveUrl(),
 			type: "POST",
 			data: { mode: "entity",
 					json: jsonString },
+			success: this.controls.callbackSaveAjaxSuccess,
 			error: function(jqXHR, textStatus, errorThrown) {
 				oApp.ajaxError("Saving failed", jqXHR, textStatus, errorThrown);
 			}
@@ -53,7 +73,7 @@ sap.ui.model.json.JSONModel.extend("net.bytedoc.UI5.JSONModelSymfony", {
 	
 	// create Load URL
 	getLoadUrl : function() {
-		return url = this.loadService + "/" + this.entity;
+		return this.loadService + "/" + this.entity;
 	},
 
 	// react on a change in the model data
@@ -77,6 +97,7 @@ sap.ui.model.json.JSONModel.extend("net.bytedoc.UI5.JSONModelSymfony", {
 	
 	// eine Zeile löschen
 	deleteRowByIndex : function(indexToDelete) {
+		indexToDelete = this.pathToIndex(indexToDelete);
 		var jsonString = JSON.stringify(this.oData[indexToDelete]);
 		this.oData.splice(indexToDelete, 1);
 		jQuery.ajax({
@@ -84,11 +105,18 @@ sap.ui.model.json.JSONModel.extend("net.bytedoc.UI5.JSONModelSymfony", {
 			type: "POST",
 			data: { mode: "delete",
 					json: jsonString },
+			success : this.controls.callbackDeleteAjaxSuccess,
 			error: function(jqXHR, textStatus, errorThrown) {
 				oApp.ajaxError("Deleting failed", jqXHR, textStatus, errorThrown);
 			}
 		});
-		
+	},
+
+	// if index is a "path", then remove the slash from it
+	pathToIndex : function(index) {
+		// ensure that index is treates as a string
+		index = index + "";
+		return index.replace(/^\//g,'');
 	},
 	
 	
@@ -96,6 +124,7 @@ sap.ui.model.json.JSONModel.extend("net.bytedoc.UI5.JSONModelSymfony", {
 	unsaved : false,
 	AutoSaveStarted : false,
 	callbackDataChanged : null,
+	callbackAjaxSuccess : null,
 
 	restartAutoSave : function() {
 		this.stopAutoSave();

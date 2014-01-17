@@ -16,18 +16,24 @@ Bytedoc\Bundle\Gps\Entity\Book:
         author:
             type: string
             length: 128
-        href_book:
+        hrefbook:
             type: string
             length: 256
-        href_reference:
+        hrefbooktext:
+            type: string
+            length: 128
+        hrefreference:
             type: string
             length: 256
+        hrefreferencetext:
+            type: string
+            length: 128
         notes:
             type: text
     manyToOne:
         user:
             targetEntity: User
-            inversedBy: books
+            #inversedBy: books
             joinColumn:
                 name: user_id
                 referencedColumnName: id

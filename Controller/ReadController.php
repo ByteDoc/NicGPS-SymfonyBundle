@@ -30,11 +30,17 @@ class ReadController extends Controller
 		if(method_exists($this->entityFullPath.$entity, "getUser")) {
 			$query = $em->createQuery('SELECT e FROM '.$this->entityFullPath.$entity.' e WHERE e.user = '.$this->getUser()->getId());
 			$objects = $query->getResult();
+			// reduce the user information in the objects, only send the user_id as part of the data
+			foreach ($objects as $key => &$object) {
+				$object->setUser(null);
+				// TODO instead of removing the whole user object, a reduction to "allowed" fields would be better
+			}
 		} else {
 			$repository = $this->getDoctrine()->getRepository($this->repositoryPath.$entity);
 			$objects = $repository->findAll();
 		}
-		
+		// var_dump($objects);
+
 		$jsonString = JsonHelper::serializeToJson($objects);
 		
 		return JsonHelper::getJsonResponseOK($this, $jsonString);

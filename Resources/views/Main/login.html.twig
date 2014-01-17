@@ -5,12 +5,12 @@
 	{{ parent() }}
 
 	<script>
-	//alert("{{ asset('bundles/gps/ext') }}");
+	//alert("{{ asset('bundles/bytedocgps/ext') }}");
 		// register the paths for required modules
-		jQuery.sap.registerModulePath("net.bytedoc.UI5","{{ asset('bundles/gps/ext') }}");
+		jQuery.sap.registerModulePath("net.bytedoc.UI5","{{ asset('bundles/bytedocgps/ext') }}");
 			// JSONModelPHPFile is required directly, because class used directly
-		jQuery.sap.registerModulePath("net.bytedoc.nicgps","{{ asset('bundles/gps/view') }}");
-		jQuery.sap.registerModulePath("net.bytedoc","{{ asset('bundles/gps/ext') }}");
+		jQuery.sap.registerModulePath("net.bytedoc.nicgps","{{ asset('bundles/bytedocgps/view') }}");
+		jQuery.sap.registerModulePath("net.bytedoc","{{ asset('bundles/bytedocgps/ext') }}");
 		jQuery.sap.require("net.bytedoc.Helper");
 		
 		// create all the Workset Items and View Array

@@ -17,15 +17,15 @@ class User implements UserInterface, \Serializable
 
     private $isActive;
 	
-	/**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $webressources;
+	// /**
+ //     * @var \Doctrine\Common\Collections\Collection
+ //     */
+ //    private $webressources;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $books;
+ //    /**
+ //     * @var \Doctrine\Common\Collections\Collection
+ //     */
+ //    private $books;
 
 	
 	/**
@@ -46,8 +46,8 @@ class User implements UserInterface, \Serializable
         $this->isActive = true;
         $this->salt = md5(uniqid(null, true));
 		
-		$this->webressources = new ArrayCollection();
-        $this->books = new ArrayCollection();
+		// $this->webressources = new ArrayCollection();
+        // $this->books = new ArrayCollection();
     }
 
     /**

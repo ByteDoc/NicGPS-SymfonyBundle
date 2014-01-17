@@ -42,8 +42,8 @@
 				view : null,
 				entity : "Book",
 				viewName : "net.bytedoc.nicgps.Books",
-				autoSave : true,
-				defaultContent : false
+				autoSave : false,
+				defaultContent : true
 			},
 			WI_portale : {
 				key : "wi_webressourcen",
@@ -52,7 +52,7 @@
 				entity : "Webressource",
 				viewName : "net.bytedoc.nicgps.WebRessourcen",
 				autoSave : true,
-				defaultContent : true
+				defaultContent : false
 			}
 			
 		};
@@ -69,6 +69,7 @@
 	
 		// Initialise the App "Controller"
 		oApp.init();
+		var mydebug;
 		
 	</script>
 {% endblock %}
