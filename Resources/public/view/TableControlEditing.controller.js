@@ -32,7 +32,7 @@ sap.ui.core.mvc.Controller.extend("net.bytedoc.nicgps.TableControlEditing", {
 		});
 		dataIndices.sort();
 		for (var i = dataIndices.length - 1; i >= 0; i--) {
-			oModel.deleteRowByIndex(dataIndices[i]);
+			oModel.deleteByIndex(dataIndices[i]);
 		};
 
 		oModel.refresh();

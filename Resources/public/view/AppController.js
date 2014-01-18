@@ -3,9 +3,9 @@
  */
 
 // Basis-Objekt deklarieren, falls noch nicht vorhanden
-if(!net) { var net = {} };
-if(!net.bytedoc) { net.bytedoc = {} };
-if(!net.bytedoc.nicgps) { net.bytedoc.nicgps = {} };
+if(!net) { var net = {}; }
+if(!net.bytedoc) { net.bytedoc = {}; }
+if(!net.bytedoc.nicgps) { net.bytedoc.nicgps = {}; }
 
 // Helper-Klasse deklarieren
 net.bytedoc.nicgps.AppController = {
@@ -13,9 +13,9 @@ net.bytedoc.nicgps.AppController = {
 	dataSaved : true,
 	init : function() {
 		var app = this;
-		this.modelTimer = setInterval(function() { app.checkAllModels() }, 5000);
+		this.modelTimer = setInterval(function() { app.checkAllModels(); }, 5000);
 	},
-	buttonSaveNow : null,
+	// buttonSaveNow : null,
 	checkAllModels : function () {
 		var counterAll = 0;
 		var counterSaved = 0;
@@ -49,7 +49,7 @@ net.bytedoc.nicgps.AppController = {
 		this.buttonSaveNow.setText("all changes saved");
 		this.buttonSaveNow.setEnabled(false);
 		this.dataSaved = true;
-		this.buttonSaveNowTimeout = setTimeout(function() { $("#buttonSaveNow").fadeOut() }, 1000);
+		this.buttonSaveNowTimeout = setTimeout(function() { $("#buttonSaveNow").fadeOut(); }, 1000);
 	},
 	saveAllModels : function() {
 		jQuery.each(oModels, function(key, item) {
@@ -67,7 +67,7 @@ net.bytedoc.nicgps.AppController = {
 	createModelsViewsNavigation : function (shellWorksetItems) {
 		// create Models, Views and Workitems
 		jQuery.each(shellWorksetItems, function(key, item) {
-			if(item.entity != null) {
+			if(item.entity !== null) {
 				oModels[item.entity] = new net.bytedoc.UI5.JSONModelSymfony();
 				oModels[item.entity].init({
 					entity : item.entity,
@@ -81,17 +81,15 @@ net.bytedoc.nicgps.AppController = {
 					oModels[item.entity].callbackDataChanged = oApp.eventDataChanged;
 				}
 			}
-			if(item.viewName != null) {
-				oViews[item.viewName] = sap.ui.view({
+			if(item.viewName !== null) {
+				oViews[item.entity] = sap.ui.view({
 					type : sap.ui.core.mvc.ViewType.JS,
 					viewName : item.viewName
 				});
-				item.view = oViews[item.viewName];
+				item.view = oViews[item.entity];
 				item.view.setModel(oModels[item.entity]);
 			}
-			if(item.view.controls != null) {
-				oModels[item.entity].controls = item.view.controls;
-			}
+			oModels[item.entity].callbacks = oViews[item.entity].callbacks;
 			aNavigationItems.push(new sap.ui.ux3.NavigationItem(key,{item:item.key,text:item.text}));
 			if(item.defaultContent) {
 				oApp.defaultShellContent = item.view;
@@ -109,9 +107,9 @@ net.bytedoc.nicgps.AppController = {
 		}
 	}),
 	createShell : function(mSettings) {
-		if(!mSettings.id) { mSettings.id = "myShell" }
-		if(!mSettings.appTitle) { mSettings.appTitle = "fehlender AppTitle" }
-		if(!mSettings.logoutPath) { mSettings.logoutPath = "/logout" }
+		if(!mSettings.id) { mSettings.id = "myShell"; }
+		if(!mSettings.appTitle) { mSettings.appTitle = "fehlender AppTitle"; }
+		if(!mSettings.logoutPath) { mSettings.logoutPath = "/logout"; }
 		
 		return new sap.ui.ux3.Shell(mSettings.id, {
 			designType: sap.ui.ux3.ShellDesignType.Crystal,
@@ -123,7 +121,6 @@ net.bytedoc.nicgps.AppController = {
 			showFeederTool: false,
 			showSearchTool: false,
 			appTitle: mSettings.appTitle,
-			showLogoutButton: false,
 			worksetItems: aNavigationItems,
 			content: oApp.defaultShellContent,
 			selectedWorksetItem: oApp.defaultShellSelectedWorksetItem,
