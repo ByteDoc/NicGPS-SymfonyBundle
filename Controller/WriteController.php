@@ -23,7 +23,7 @@ class WriteController extends Controller
 	
 	// only allow these entities to be managed by the read controller
 	// this is the general controller, specific entities must have their own controller
-	private $managedEntities = array('Webressource', 'Book');
+	private $managedEntities = array('Webressource', 'Book', 'Goal');
 	
 	private $entityFullPath = 'Bytedoc\\Bundle\\Gps\\Entity\\';
 	private $repositoryPath = "BytedocGpsBundle:";

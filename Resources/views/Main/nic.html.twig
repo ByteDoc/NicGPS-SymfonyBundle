@@ -45,7 +45,17 @@
 				view : null,
 				entity : null,
 				viewName : "net.bytedoc.nicgps.Dashboard",
-				inNavigation : true
+				inNavigation : true,
+				includedWorksetItems : {
+					WI_goals : {
+						key : "wi_goals",
+						text : "Goals",
+						view : null,
+						entity : "Goal",
+						viewName : "net.bytedoc.nicgps.Goals",
+						autoSave : true
+					},
+				}
 			},
 			WI_books : {
 				key : "wi_books",

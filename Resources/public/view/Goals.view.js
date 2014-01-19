@@ -1,10 +1,19 @@
 
 
 // View for GPS Dashboard
-sap.ui.jsview("net.bytedoc.nicgps.DeadlinesPanel", {
+sap.ui.jsview("net.bytedoc.nicgps.Goals", {
 	getControllerName: function() {
 		return "net.bytedoc.nicgps.TableControlEditing";
 	},
+
+	callbacks : {
+        ajaxSaveSuccess : function() {
+            // relying on global variables here ...
+        },
+        ajaxDeleteSuccess : function() {
+            // relying on global variables here ...
+        }
+    },
 	
 	// content of the view
 	createContent: function(oController) {
@@ -30,8 +39,8 @@ sap.ui.jsview("net.bytedoc.nicgps.DeadlinesPanel", {
 		oToolbar.addItem(oTbButDeleteRow);
 		// ## END Toolbar ##
 		
-		var oTableDeadlines = new sap.ui.table.Table({
-			id : this.createId("tableDeadlines"),
+		var oTableGoals = new sap.ui.table.Table({
+			id : this.createId("tableGoals"),
 			editable : true,
 			visibleRowCount : 5,
 			navigationMode : sap.ui.table.NavigationMode.Paginator,
@@ -41,11 +50,11 @@ sap.ui.jsview("net.bytedoc.nicgps.DeadlinesPanel", {
 		var watchedControls = [];
 		// ## Datum ##
 		var oControl = new sap.ui.commons.DatePicker({
-			yyyymmdd : "{date}",
+			yyyymmdd : "{duedate}",
 			locale : "de"
 		});
 		watchedControls.push(oControl);
-		oTableDeadlines.addColumn(new sap.ui.table.Column({
+		oTableGoals.addColumn(new sap.ui.table.Column({
 			label : new sap.ui.commons.Label({ text : "Datum"}),
 			template : oControl,
 			sortProperty : "date",
@@ -57,30 +66,48 @@ sap.ui.jsview("net.bytedoc.nicgps.DeadlinesPanel", {
 			value : "{title}"
 		});
 		watchedControls.push(oControl);
-		oTableDeadlines.addColumn(new sap.ui.table.Column({
+		oTableGoals.addColumn(new sap.ui.table.Column({
 			label : new sap.ui.commons.Label({ text : "Titel"}),
 			template : oControl,
 			sortProperty : "title",
 			filterProperty : "title",
 			width : "120px"
 		}));
+		// ## Progress ##
+		oControl = new sap.ui.commons.Slider({
+			width : "200px",
+			min : 0,
+			max : 100,
+			value : "{progress}",
+			smallStepWidth : 5,
+			stepLabels : true
+		});
+		watchedControls.push(oControl);
+		oTableGoals.addColumn(new sap.ui.table.Column({
+			label : new sap.ui.commons.Label({ text : "Progress"}),
+			template : oControl,
+			sortProperty : "progress",
+			filterProperty : "progress",
+			width : "200px"
+		}));
+		// ## register change events for watched controls ##
 		jQuery.each(watchedControls, function(key, item) {
 			item.attachChange(oController.dataChanged);
 		});
-		oTableDeadlines.bindRows("/");
+		oTableGoals.bindRows("/");
 		// #### End Table ####
 		
 		
 		// #### Panel ####
-		var oPanelDeadlines = new sap.ui.commons.Panel({
-			title : new sap.ui.core.Title({ text : "Deadlines" }),
+		var oPanelGoals = new sap.ui.commons.Panel({
+			title : new sap.ui.core.Title({ text : "Goals" }),
 			areaDesign : sap.ui.commons.enums.AreaDesign.Plain,
 			borderDesign : sap.ui.commons.enums.BorderDesign.None,
-			content : oTableDeadlines
+			content : oTableGoals
 		});
 		// #### End Panel ####
 
 		
-		return oPanelDeadlines;
+		return oPanelGoals;
 	}
 });

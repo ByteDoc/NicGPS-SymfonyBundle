@@ -11,6 +11,9 @@ sap.ui.core.mvc.Controller.extend("net.bytedoc.nicgps.TableControlEditing", {
 	},
 	
 	deleteRow: function(oEvent) {
+		if(!confirm('Really delete this entry?')) {
+			return;
+		}
 		var oModel = this.getModel();
 		var oButton = oEvent.getSource();
 		myDebug = oButton;
@@ -38,7 +41,9 @@ sap.ui.core.mvc.Controller.extend("net.bytedoc.nicgps.TableControlEditing", {
 		oModel.refresh();
 	},
 	
-	dataChanged: function(oSource) {
+	dataChanged: function(oEvent) {
+		mydebug = oSource;
+		var oSource = oEvent.getSource();
 		var oModel = oSource.getModel();
 		oModel.dataChanged(oSource.getBindingContext().getPath());
 	},

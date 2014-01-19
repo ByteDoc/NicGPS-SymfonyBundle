@@ -1,0 +1,25 @@
+Bytedoc\Bundle\Gps\Entity\Goal:
+    type: entity
+    table: gps_goals
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        title:
+            type: string
+            length: 128
+        duedate:
+            type: date
+        progress:
+            type: smallint
+        hide:
+            type: boolean
+        notes:
+            type: text
+    manyToOne:
+        user:
+            targetEntity: User
+            joinColumn:
+                name: user_id
+                referencedColumnName: id

@@ -13,6 +13,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 use JMS\Serializer\SerializerBuilder;
+use JMS\Serializer\Handler\HandlerRegistry;
 
 //use Bytedoc\Bundle\Gps\Entity\User;
 
@@ -25,7 +26,12 @@ class JsonHelper {
 
 		//$serializer = new Serializer($normalizers, $encoders);
 		
-		$serializer = \JMS\Serializer\SerializerBuilder::create()->build();
+		$serializer = \JMS\Serializer\SerializerBuilder::create()
+			->addDefaultHandlers()
+			->configureHandlers(function(\JMS\Serializer\Handler\HandlerRegistry $registry) {
+		        $registry->registerSubscribingHandler(new MyJsonHandler());
+		    })
+			->build();
 		
 		return $serializer->serialize($object, 'json');
 	}

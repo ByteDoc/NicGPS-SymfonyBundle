@@ -125,11 +125,12 @@ sap.ui.jsview("net.bytedoc.nicgps.WebRessourcen", {
 		
 		jQuery.each(watchedControls, function(key, item) {
 			//item.attachChange(oController.dataChanged);
-			item.attachChange( function(oEvent) {
-				oController.dataChanged(this);
-				//var oModel = this.getModel();
-				//oModel.dataChanged(this);
-			});
+			item.attachChange(oController.dataChanged);
+			// item.attachChange( function(oEvent) {
+			// 	oController.dataChanged(this);
+			// 	//var oModel = this.getModel();
+			// 	//oModel.dataChanged(this);
+			// });
 		});
 		
 		oTable.bindRows("/");

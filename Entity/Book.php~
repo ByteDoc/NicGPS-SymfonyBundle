@@ -33,9 +33,11 @@ class Book
 		$this->setCategory($copy->getCategory());
         $this->setTitle($copy->getTitle());
         $this->setAuthor($copy->getAuthor());
-		$this->setHrefBook($copy->getHrefBook());
-		$this->setHrefReference($copy->getHrefReference());
-		$this->setNotes($copy->getNotes());
+		$this->setHrefbook($copy->getHrefbook());
+        $this->setHrefreference($copy->getHrefreference());
+        $this->setHrefbooktext($copy->getHrefbooktext());
+        $this->setHrefreferencetext($copy->getHrefreferencetext());
+        $this->setNotes($copy->getNotes());
 		
 		return $this;
 	}
@@ -49,8 +51,10 @@ class Book
         $this->setCategory("");
         $this->setTitle("");
         $this->setAuthor("");
-        $this->setHrefBook("");
-        $this->setHrefReference("");
+        $this->setHrefbook("");
+        $this->setHrefreference("");
+        $this->setHrefbooktext("");
+        $this->setHrefreferencetext("");
         $this->setNotes("");
         
         return $this;
@@ -250,12 +254,6 @@ class Book
     private $hrefbooktext;
 
     /**
-     * @var string
-     */
-    private $hrefreferencename;
-
-
-    /**
      * Set hrefbooktext
      *
      * @param string $hrefbooktext
@@ -263,7 +261,10 @@ class Book
      */
     public function setHrefbooktext($hrefbooktext)
     {
-        $this->hrefbooktext = $hrefbooktext;
+        if(isset($hrefbooktext))
+        {
+            $this->hrefbooktext = $hrefbooktext;
+        }
 
         return $this;
     }
@@ -279,25 +280,34 @@ class Book
     }
 
     /**
-     * Set hrefreferencename
+     * @var string
+     */
+    private $hrefreferencetext;
+
+
+    /**
+     * Set hrefreferencetext
      *
-     * @param string $hrefreferencename
+     * @param string $hrefreferencetext
      * @return Book
      */
-    public function setHrefreferencename($hrefreferencename)
+    public function setHrefreferencetext($hrefreferencetext)
     {
-        $this->hrefreferencename = $hrefreferencename;
+        if(isset($hrefreferencetext))
+        {
+            $this->hrefreferencetext = $hrefreferencetext;
+        }
 
         return $this;
     }
 
     /**
-     * Get hrefreferencename
+     * Get hrefreferencetext
      *
      * @return string 
      */
-    public function getHrefreferencename()
+    public function getHrefreferencetext()
     {
-        return $this->hrefreferencename;
+        return $this->hrefreferencetext;
     }
 }

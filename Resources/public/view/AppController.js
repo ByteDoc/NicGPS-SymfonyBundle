@@ -67,6 +67,10 @@ net.bytedoc.nicgps.AppController = {
 	createModelsViewsNavigation : function (shellWorksetItems) {
 		// create Models, Views and Workitems
 		jQuery.each(shellWorksetItems, function(key, item) {
+			// first create all necessary included items
+			if(typeof item.includedWorksetItems !== "undefined") {
+				oApp.createModelsViewsNavigation(item.includedWorksetItems);
+			}
 			if(item.entity !== null) {
 				oApp.createModel(item.entity, item.autoSave);
 			}

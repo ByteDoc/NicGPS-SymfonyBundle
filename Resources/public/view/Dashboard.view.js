@@ -30,10 +30,10 @@ sap.ui.jsview("net.bytedoc.nicgps.Dashboard", {
 		
 		
 		// #### Deadlines ####
-		var oViewDeadlinesPanel = sap.ui.view({
-			type : sap.ui.core.mvc.ViewType.JS,
-			viewName : "net.bytedoc.nicgps.DeadlinesPanel"
-		});
+		// var oViewDeadlinesPanel = sap.ui.view({
+		// 	type : sap.ui.core.mvc.ViewType.JS,
+		// 	viewName : "net.bytedoc.nicgps.Goals"
+		// });
 		// var oModelDeadlinesPanel = new net.bytedoc.UI5.JSONModelSymfony();
 		// oModelDeadlinesPanel.init( {
 		// 	entity : "Deadlines",
@@ -45,14 +45,14 @@ sap.ui.jsview("net.bytedoc.nicgps.Dashboard", {
 		// oModelDeadlinesPanel.callbackDataChanged = oApp.eventDataChanged;
 		// oViewDeadlinesPanel.setModel(oModelDeadlinesPanel);
 		// add objects to global arrays
-		oViews["net.bytedoc.nicgps.DeadlinesPanel"] = oViewDeadlinesPanel;
+		// oViews["net.bytedoc.nicgps.DeadlinesPanel"] = oViewDeadlinesPanel;
 		// oModels["Deadlines"] = oModelDeadlinesPanel;
 		// #### END Deadlines ####
 		
 		oLayout.createRow(
 			new sap.ui.commons.layout.MatrixLayoutCell({
 				vAlign : sap.ui.core.VerticalAlign.Top,
-				content : oViewDeadlinesPanel
+				content : oViews.Goal
 			}),
 			new sap.ui.commons.layout.MatrixLayoutCell({
 				vAlign : sap.ui.core.VerticalAlign.Top ,
