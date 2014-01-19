@@ -28,23 +28,33 @@
 		// initiate the structure that holds the Metadata for
 		//   Navigation, Views, Data Entities
 		var oShellWorksetItems = {
-//			WI_home : {
-//				key : "wi_home",
-//				text : "Home",
-//				view : null,
-//				entity : "Dashboard",
-//				viewName : "net.bytedoc.nicgps.Dashboard",
-//				autoSave : true,
-//				defaultContent : true
-//			},
+			// FULL CONFIGURATION EXAMPLE
+			// WI_example : {							# attribute identifier for this item
+			// 	key : "wi_example",						# KEY for the workset item
+			// 	text : "Example",						# TEXT that is displayed in the shell navigation
+			// 	inNavigation : true,					# BOOLEAN include in Navigation (default FALSE)
+			// 	view : null,							# VIEW object placeholder, required
+			// 	entity : "exampleentity",				# ENTITY of the data that will be managed by the model
+			// 	viewName : "net.bytedoc.example.view",	# VIEW-NAME defined in view file
+			// 	autoSave : false,						# BOOLEAN use AutoSave for the model (default FALSE)
+			// 	defaultContent : false 					# BOOLEAN use this content as default content for the shell
+			// },
+			WI_home : {
+				key : "wi_home",
+				text : "Home",
+				view : null,
+				entity : null,
+				viewName : "net.bytedoc.nicgps.Dashboard",
+				inNavigation : true
+			},
 			WI_books : {
 				key : "wi_books",
 				text : "Bücher",
 				view : null,
 				entity : "Book",
 				viewName : "net.bytedoc.nicgps.Books",
-				autoSave : false,
-				defaultContent : true
+				defaultContent : true,
+				inNavigation : true
 			},
 			WI_portale : {
 				key : "wi_webressourcen",
@@ -53,7 +63,7 @@
 				entity : "Webressource",
 				viewName : "net.bytedoc.nicgps.WebRessourcen",
 				autoSave : true,
-				defaultContent : false
+				inNavigation : true
 			}
 			
 		};

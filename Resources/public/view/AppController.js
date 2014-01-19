@@ -68,34 +68,53 @@ net.bytedoc.nicgps.AppController = {
 		// create Models, Views and Workitems
 		jQuery.each(shellWorksetItems, function(key, item) {
 			if(item.entity !== null) {
-				oModels[item.entity] = new net.bytedoc.UI5.JSONModelSymfony();
-				oModels[item.entity].init({
-					entity : item.entity,
-					loadService : oApp.readDataService,
-					saveService : oApp.writeDataService
-				});
-				oModels[item.entity].loadAll();
-				if(item.autoSave) {
-					oModels[item.entity].startAutoSave();
-					// callback only for autosave models
-					oModels[item.entity].callbackDataChanged = oApp.eventDataChanged;
-				}
+				oApp.createModel(item.entity, item.autoSave);
 			}
 			if(item.viewName !== null) {
-				oViews[item.entity] = sap.ui.view({
-					type : sap.ui.core.mvc.ViewType.JS,
-					viewName : item.viewName
-				});
-				item.view = oViews[item.entity];
-				item.view.setModel(oModels[item.entity]);
+				item.view = oApp.createView(item.entity, item.viewName);
 			}
-			oModels[item.entity].callbacks = oViews[item.entity].callbacks;
-			aNavigationItems.push(new sap.ui.ux3.NavigationItem(key,{item:item.key,text:item.text}));
+			if(item.entity !== null) {
+				oApp.registerCallbacks(item.entity);
+			}
 			if(item.defaultContent) {
-				oApp.defaultShellContent = item.view;
-				oApp.defaultShellSelectedWorksetItem = key;
+				oApp.setShellDefaultContent(oViews[item.entity], key);
+			}
+			if(item.inNavigation) {
+				oApp.addNavigationItem(key, item.key, item.text);
 			}
 		});
+	},
+	createModel : function(entity, autoSave) {
+		oModels[entity] = new net.bytedoc.UI5.JSONModelSymfony();
+		oModels[entity].init({
+			entity : entity,
+			loadService : oApp.readDataService,
+			saveService : oApp.writeDataService
+		});
+		oModels[entity].loadAll();
+		if(autoSave) {
+			oModels[entity].startAutoSave();
+			// callback only for autosave models
+			oModels[entity].callbackDataChanged = oApp.eventDataChanged;
+		}
+	},
+	createView : function(entity, viewName) {
+		oViews[entity] = sap.ui.view({
+			type : sap.ui.core.mvc.ViewType.JS,
+			viewName : viewName
+		});
+		oViews[entity].setModel(oModels[entity]);
+		return oViews[entity];
+	},
+	registerCallbacks : function(entity) {
+		oModels[entity].callbacks = oViews[entity].callbacks;
+	},
+	setShellDefaultContent : function(content, item) {
+		oApp.defaultShellContent = content;
+		oApp.defaultShellSelectedWorksetItem = item;
+	},
+	addNavigationItem : function(key, item, text) {
+		aNavigationItems.push(new sap.ui.ux3.NavigationItem(key, { item : item, text : text }));
 	},
 	defaultShellContent : null,
 	buttonSaveNow : new sap.ui.commons.Button({

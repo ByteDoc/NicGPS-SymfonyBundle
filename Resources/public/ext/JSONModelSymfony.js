@@ -93,7 +93,7 @@ sap.ui.model.json.JSONModel.extend("net.bytedoc.UI5.JSONModelSymfony", {
 		var oData = this.oData;
 		var index = 0;
 		jQuery.each(this.changedPaths, function(index, value) {
-			index = this.pathToIndex(value);
+			index = net.bytedoc.Helper.pathToIndex(value);
 			arrayToSave.push(oData[index]);
 		});
 		// create JSON string for the changed paths

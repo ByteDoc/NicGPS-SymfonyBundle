@@ -7,6 +7,15 @@ sap.ui.jsview("net.bytedoc.nicgps.WebRessourcen", {
 	},
 
 	controls : {},
+
+	callbacks : {
+        ajaxSaveSuccess : function() {
+            // relying on global variables here ...
+        },
+        ajaxDeleteSuccess : function() {
+            // relying on global variables here ...
+        }
+    },
 	
 	// content of the view: editable Table Control with Toolbar
 	createContent: function(oController) {
@@ -29,7 +38,10 @@ sap.ui.jsview("net.bytedoc.nicgps.WebRessourcen", {
 			press : oController.save
 		});
 		oToolbar.addItem(oTbButAddRow);
+		oToolbar.addItem(new sap.ui.commons.ToolbarSeparator());
 		oToolbar.addItem(oTbButDeleteRow);
+		oToolbar.addItem(new sap.ui.commons.ToolbarSeparator());
+		oToolbar.addItem(new sap.ui.commons.TextView({ text : "speichern erfolgt automatisch" }));
 		//oToolbar.addItem(oTbButSave);
 		// #### END Toolbar ####
 		

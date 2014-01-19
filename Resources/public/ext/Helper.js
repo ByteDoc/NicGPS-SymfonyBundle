@@ -11,7 +11,7 @@ net.bytedoc.Helper = {};
 
 /*
  * net.bytedoc.Helper.createGuid
- * erzeugt eine GUID nach Version 4 RFC4122
+ * creates a GUID according to Version 4 RFC4122
  */
 net.bytedoc.Helper.createGuid = function()
 {
@@ -20,4 +20,14 @@ net.bytedoc.Helper.createGuid = function()
         var r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8);
         return v.toString(16);
     });
+}
+
+/**
+ * net.bytedoc.Helper.pathToIndex
+ * if index is a "path", then remove the slash from it
+ */
+net.bytedoc.Helper.pathToIndex = function(index) {
+	// ensure that index is treates as a string
+	index = index + "";
+	return index.replace(/^\//g,'');
 }
